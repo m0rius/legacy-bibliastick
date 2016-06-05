@@ -16,4 +16,10 @@ class StickerController extends \Picon\Lib\Controller{
     public function editAction($id = 0){
 
     }
+
+    public function listeAction($type = 0){
+
+    }
+
+
 }
