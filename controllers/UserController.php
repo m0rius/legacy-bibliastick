@@ -12,8 +12,9 @@ class UserController extends \Picon\Lib\Controller{
     }
 
     public function indexAction(){
-
-    }
+        $this->layout   =   "back";
+        $this->set(array("pseudo" =>  $_SESSION["user"]["pseudo"], "authLevel" =>  $this->security->getAuthLevel())); 
+   }
 
     public function loginAction($deco = ""){
         $error  =   false;
@@ -30,6 +31,8 @@ class UserController extends \Picon\Lib\Controller{
                 }
             }
             $error  =   true;
+        } else if($this->security->isLoggedIn()) {
+            $this->redirect("/back/home");
         }
         $this->set(array("error"   =>  $error, "fromLogout" => $deco && true));
     }

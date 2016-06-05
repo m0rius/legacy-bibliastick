@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Bibliastick</title>
+    </head>
+    <body>
+        <header>
+            <h1>Bienvenue <?php echo $this->pseudo; ?>!</h2>
+        </header>
+        <div>
+            <nav>
+                <div class="tools">
+                    <h2>Outils</h2>
+                    <h3>Vos contributions</h3>
+                    <ul>
+                        <li><a href="/back/liste/sticker">Stickers</a></li>
+                        <li><a href="/back/liste/contributions">Informations</a></li>
+                        <li><a href="/back/liste/pictures">Photos</a></li>
+                        <li><a href="/back/liste/categories">Categories</a></li>
+                    </ul>
+                    <h3>Autre</h3>
+                    <ul>
+                        <li><a href="/back/liste/sticker/mine">Liste de vos stickers</a></li>
+                        <li><a href="/back/messages">Messagerie</a></li>
+                        <li><a href="/back/logout">Déconnexion</a></li>
+                    </ul>
+                </div>
+                <?php 
+                if(intval($this->authLevel) >= 2){ ?>
+                <div class="tools tools-admin">
+                    <h2>Outils d'administration</h2>
+                    <h3>Listes de validation</h3>
+                    <ul>
+                        <li><a href="/back/admin/liste/sticker">Stickers</a></li>
+                        <li><a href="/back/admin/liste/contributions">Informations</a></li>
+                        <li><a href="/back/admin/liste/pictures">Photos</a></li>
+                        <li><a href="/back/admin/liste/categories">Categories</a></li>
+                    </ul>
+                    <h3>Autre</h3>
+                    <ul>
+                        <li><a href="i/back/admin/liste/users">Gestion des utilisateurs</a></li>
+                    </ul>
+                </div>
+                <?php } ?>
+            </nav>
+            <section>
+                <?php
+                    $this->render();
+                ?>
+            </section>
+    </body>
+</html>
+
