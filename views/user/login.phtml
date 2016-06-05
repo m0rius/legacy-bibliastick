@@ -1,0 +1,21 @@
+<h1>Bibliastick : login</h1>
+
+<?php if($this->error){ ?>
+<div>
+    <h2>Error lors de la saisie, veuillez recommencer</h2>
+</div>
+<?php } ?>
+<?php if($this->fromLogout) { ?>
+<div>
+    <h2>Vous avez été déconnecté avec succès!</h2>
+</div>
+<?php } ?>
+<form method="post" action="/back/login">
+    <label for="pseudo">Pseudo</label>
+    <input name="pseudo"/>
+    <br/>
+    <label for="pass">Mot de passe</label>
+    <input name="pass" type="password"/>
+    <br/>
+    <input type="submit" value="connection"/>
+</form>
