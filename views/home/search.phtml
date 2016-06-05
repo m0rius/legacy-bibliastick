@@ -1,3 +1,16 @@
-<pre>
-    <?php print_r($this->stickers); ?>
-</pre>
+<h1>Résultats de la recherche:</h1>
+<?php if(count($this->stickers)){ ?>
+<ul>
+    <?php foreach($this->stickers as $sticker){?>
+        <li>
+            <h3><a href="/sticker/id/<?php echo $sticker["id"]; ?>">
+                    <?php echo $sticker["title"]; ?>
+            </a><h3>
+        </li>
+    <?php } ?>
+</ul>
+<?php } else { ?>
+<h3><small>Aucun résultat</small>
+<?php } ?>
+
+
