@@ -8,12 +8,21 @@ class UserController extends \Picon\Lib\Controller{
         if($this->route["action"]   ==  "login"){
             $this->security->disable();
         }
+
+        // Check user's privileges
+        if($this->route["action"]   ==  "listeAdminUser"){
+            $this->security->check(2);
+        }
+
         parent::pre_action();
+        
+        if(!in_array($this->route["action"], array("logout", "login"))){
+            $this->set(array("pseudo" =>  $_SESSION["user"]["pseudo"], "authLevel" =>  $this->security->getAuthLevel())); 
+        }
     }
 
     public function indexAction(){
         $this->layout   =   "back";
-        $this->set(array("pseudo" =>  $_SESSION["user"]["pseudo"], "authLevel" =>  $this->security->getAuthLevel())); 
    }
 
     public function loginAction($deco = ""){
@@ -40,6 +49,9 @@ class UserController extends \Picon\Lib\Controller{
     public function logoutAction(){
        $this->security->unsetSessionInfos(); 
        $this->redirect("/back/login/success");
-
+    }
+    
+    public function listeAdminUserAction(){
+        $this->layout   =   "back";
     }
 }
