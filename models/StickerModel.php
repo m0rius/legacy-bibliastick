@@ -36,14 +36,21 @@ class StickerModel extends \Picon\Lib\Model{
         $query  =   self::$db->prepare("select * from stickers where id = ? ;");
         $query->execute(array($id));
         $infoSticker    =   $query->fetchAll();
+
         if($infoSticker){
             $infos["sticker"] = $infoSticker[0];
+            $_infos     =   new \Models\InfoModel();
+            $_pictures  =   new \Models\PictureModel();
+            
+            $infos["infos"]     =   $_infos->getStickerInfo($id);
+            $infos["pictures"]  =   $_pictures->getStickerPictures($id);
         }
 
         return $infos;
 
 
     }
+
 
 
 }
