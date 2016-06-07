@@ -39,9 +39,9 @@ class UserController extends \Picon\Lib\Controller{
                 isset($_POST["pass"]) && $_POST["pass"]
             ){
                 $_users     =   new \Models\UserModel();      
-                $auth_level =   $_users->checkInfos($_POST["pseudo"], $_POST["pass"]);
-                if($auth_level){
-                    $this->security->setSessionInfos($auth_level, $_POST["pseudo"], $_POST["pass"]);
+                $authInfos =   $_users->checkInfos($_POST["pseudo"], $_POST["pass"]);
+                if($authInfos){
+                    $this->security->setSessionInfos($authInfos["id"], $authInfos["type"], $_POST["pseudo"], $_POST["pass"]);
                     $this->redirect("/back/home");
                 }
             }

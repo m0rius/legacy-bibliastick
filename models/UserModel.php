@@ -6,11 +6,11 @@ class UserModel extends \Picon\Lib\Model{
    
     /** TODO : crypt those passwords **/
     public function checkInfos($pseudo, $pass){
-        $query  =   self::$db->prepare("select type from users where pseudo = ? && pass = ?;");
+        $query  =   self::$db->prepare("select id, type from users where pseudo = ? && pass = ?;");
         $query->execute(array($pseudo, $pass));
-        $type   =   $query->fetchColumn(0);
-        $query->closeCursor();
-        return $type;
+        $all    =   $query->fetchAll();
+        $infos  =   $all ? $all[0] : array();
+        return $infos;
     }
 
     public function getAllValidatedUsers(){
