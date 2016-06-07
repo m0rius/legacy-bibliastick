@@ -1,0 +1,86 @@
+<?php if(!$this->perso) { ?>
+<h2>Liste des stickers dont vous êtes l'auteur</h2>
+
+<h3>Proposer un nouveau sticker</h3>
+<table>
+    <thead>
+        <tr>
+            <td>Titre</td>  
+            <td>Breve description</td>  
+            <td></td>
+        </tr>
+    </thead>
+    <tbody>
+        <form action="/back/liste/stickers" method="post">
+            <tr>
+                <td><input name="title" placeholder="Un nouveau titre"/></td>
+                <td><textarea name="description" cols="30" rows="5"></textarea></td>
+                <td><input type="submit" value="Valider"/></td>
+            </tr>
+        </form>
+    </tbody>
+</table>
+
+<?php 
+if(count($this->listeAuteur)) { 
+    $title  =   array(
+        "validated" =>  "Validés",
+        "refused"   =>  "Refusés",
+        "waiting"   =>  "En attente de validation"
+    );
+    foreach($this->listeAuteur as $category =>  $liste){
+?>
+<h3><?php echo $title[$category]; ?></h3>
+<table>
+    <thead>
+        <tr>
+            <td>Titre</td>  
+            <td>Date de création</td>
+            <?php if($category == "validated") { ?><td>Lien</td><?php } ?>
+        </tr>
+    </thead>
+    <tbody>
+        <?php foreach($liste as $sticker) { ?>
+            <tr>
+                <td><?php echo $sticker["title"]; ?></td>
+                <td><?php echo $sticker["creation"]; ?></td>
+                <?php if($category == "validated") { ?><td><a href="/sticker/id/<?php echo $sticker["id"]; ?>">Accéder</a></td><?php } ?>
+            </tr>
+        <?php } ?>
+    </tbody>
+</table>
+
+<?php } 
+} else { ?>
+
+<small>Aucun contenu à afficher</small>
+
+<?php }
+} else { ?>
+<h2>Liste des stickers dans votre collection</h2>
+<?php if(count($this->listePerso)) { ?>
+<table>
+    <thead>
+        <tr>
+            <td>Titre</td>  
+            <td>Date de création</td>
+            <td>Lien</td>
+        </tr>
+    </thead>
+    <tbody>
+        <?php foreach($this->listePerso as $sticker) { ?>
+            <tr>
+                <td><?php echo $sticker["title"]; ?></td>
+                <td><?php echo $sticker["creation"]; ?></td>
+                <td><a href="/sticker/id/<?php echo $sticker["id"]; ?>">Accéder</a></td>
+            </tr>
+        <?php } ?>
+    </tbody>
+</table>
+
+<?php } else { ?>
+<small>Aucun contenu à afficher</small>
+<?php }
+ } ?>
+
+
