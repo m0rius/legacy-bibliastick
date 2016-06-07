@@ -1,0 +1,131 @@
+<?php echo $this->error; ?>
+
+<h2>Liste des utilisateurs</h2>
+
+<h3>Nouvel utilisateur</h3>
+<table>
+    <thead>
+        <tr>
+            <td>Pseudo</td>
+            <td>Mail</td>
+            <td>Mot de passe</td>
+            <td>Confirmation</td>
+            <td>Type</td>
+            <td>Action</td>
+        </tr>
+    </thead>
+    <tbody>
+            <form action="/back/admin/liste/users" method="post">
+                <tr>
+                    <td><input name="pseudo" placeholder="Pseudo"/> </td>
+                    <td><input name="mail" placeholder="Mail"/></td>
+                    <td><input name="pass" placeholder="Mot de passe"/></td>
+                    <td><input name="cpass" placeholder="Confirmation"/></td>
+                    <td>
+                        <select name="type">
+                           <option value="1" selected>Utilisateur</option>
+                           <option value="2">Administrateur</option> 
+                        </select>
+                                
+                    </td>
+                    <td>
+                        <input type="hidden" name="id" value="0"/>
+                        <input value="Créer" type="submit"/>
+                    </td>
+                </tr>
+            </form>
+    </tbody>
+<table>
+
+<?php if(count($this->usersToValidate)) { ?>
+<h3>Compte à valider</h3>
+<table>
+    <thead>
+        <tr>
+            <td>Pseudo</td>
+            <td>Mail</td>
+            <td>Mot de passe</td>
+            <td>Type</td>
+            <td>Valider</td>
+            <td>Supprimer</td>
+            <td>Action</td>
+        </tr>
+    </thead>
+    <tbody>
+        <?php foreach($this->usersToValidate as $user) { ?>
+            <form action="/back/admin/liste/users" method="post">
+                <tr>
+                    <td><input disabled value="<?php echo $user["pseudo"]; ?>"></td>
+                    <td><input disabled value="<?php echo $user["mail"]; ?>"></td>
+                    <td><input disabled value="<?php echo $user["pass"]; ?>"></td>
+                    <td> 
+                        <select disabled name="type"> 
+                           <option value="1" <?php echo $user["type"] == 1 ? "selected" : "" ; ?> >Utilisateur</option>
+                           <option value="2" <?php echo $user["type"] == 2 ? "selected" : "" ; ?>>Administrateur</option> 
+                        </select>
+                    </td>
+                    <td><input type="checkbox" name="validate" value="validate"/></td>
+                    <td><input type="checkbox" name="delete" value="delete"/></td>
+                    <td>
+                        <input type="hidden" name="mark" value="toValidate"/>
+                        <input type="hidden" name="id" value="<?php echo $user["id"]; ?>"/>
+                        <input value="Mettre à jour" type="submit"/>
+                    </td>
+                </tr>
+            </form>
+        <?php } ?>
+    </tbody>
+<table>
+<?php } ?>
+
+<h3>Liste des utilisateurs</h3>
+<table>
+    <thead>
+        <tr>
+            <td>Pseudo</td>
+            <td>Mail</td>
+            <td>Mot de passe</td>
+            <td>Confirmation</td>
+            <td>Type</td>
+            <td>Supprimer</td>
+            <td>Action</td>
+        </tr>
+    </thead>
+    <tbody>
+        <?php foreach($this->users as $user) { ?>
+            <form action="/back/admin/liste/users" method="post">
+                <tr>
+                    <td><input name="pseudo" value="<?php echo $user["pseudo"]; ?>"/></td>
+                    <td><input name="mail" value="<?php echo $user["mail"]; ?>"/></td>
+                    <td><input name="pass" placeholder="En cas de modfication"/></td>
+                    <td><input name="cpass" placeholder="En cas de modification"/></td>
+                    <td> 
+                        <select name="type"> 
+                           <option value="1" <?php echo $user["type"] == 1 ? "selected" : "" ; ?> >Utilisateur</option>
+                           <option value="2" <?php echo $user["type"] == 2 ? "selected" : "" ; ?>>Administrateur</option> 
+                        </select>
+                    </td>
+                    <td><input type="checkbox" name="delete" value="delete"/></td>
+                    <td>
+                        <input type="hidden" name="id" value="<?php echo $user["id"]; ?>"/>
+                        <input value="Mettre à jour" type="submit"/>
+                    </td>
+                </tr>
+            </form>
+        <?php } ?>
+        
+    </tbody>
+<table>
+<?php /* foreach($this->users as $user) { ?>
+    
+    <form method="post" action"/back/admin/liste/users">
+        <label for="pseudo">Pseudo</label>
+        <input name="pseudo" value="<?php echo $user["pseudo"]; ?>" />
+        <br/>
+        <label for="email">Mail</label>
+        <input name="email" type="email" value="<?php echo $user["pseudo"]; ?>"/>
+        <br/>
+
+    </form>
+<?php } */ ?>
+    
