@@ -32,8 +32,7 @@ class UserController extends \Picon\Lib\Controller{
         $this->layout   =   "back";
    }
 
-    public function loginAction($deco = ""){
-        $error  =   false;
+    public function loginAction(){
         if($this->route["method"] == "POST"){
             if(
                 isset($_POST["pseudo"]) && $_POST["pseudo"] && 
@@ -46,16 +45,16 @@ class UserController extends \Picon\Lib\Controller{
                     $this->redirect("/back/home");
                 }
             }
-            $error  =   true;
+            $this->sendViewError("Erreur d'authentification, veuillez réessayer");
         } else if($this->security->isLoggedIn()) {
             $this->redirect("/back/home");
         }
-        $this->set(array("error"   =>  $error, "fromLogout" => $deco && true));
     }
 
     public function logoutAction(){
-       $this->security->unsetSessionInfos(); 
-       $this->redirect("/back/login/success");
+        $this->security->unsetSessionInfos(); 
+        $this->sendViewMessage("Déconnexion réussie!", 2);
+        $this->redirect("/back/login");
     }
     
     public function listeAdminAction(){
@@ -81,7 +80,7 @@ class UserController extends \Picon\Lib\Controller{
                     $_users->updateUser($_POST["id"], $_POST["pseudo"], $_POST["mail"], $_POST["type"]);
                     break;
                 case self::U_ERR:
-                    $error  =   "Bad inputs";
+                    $this->sendViewError("Bad inputs");
                     break;
                 default:
                     throw new HttpException(500);
@@ -89,13 +88,11 @@ class UserController extends \Picon\Lib\Controller{
             }
         }
 
-        $this->set(
-                array(
-                    "users"             =>  $_users->getAllValidatedUsers(), 
-                    "usersToValidate"   =>  $_users->getAllToValidateUsers(),
-                    "error"             =>  $error
-                )
-            );
+        $this->set(array(
+                        "users"             =>  $_users->getAllValidatedUsers(), 
+                        "usersToValidate"   =>  $_users->getAllToValidateUsers(),
+                    )
+                );
     }
 
     private function computeAction($f){

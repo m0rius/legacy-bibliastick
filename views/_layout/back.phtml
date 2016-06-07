@@ -46,7 +46,31 @@
                 <?php } ?>
             </nav>
             <section>
+                <?php 
+                    if(count($this->_errors)){
+                ?>
+                <div id="liste-errors">
+                    <?php foreach($this->_errors as $level => $group) { ?>
+                    <ul id="list-errors-l<?php echo $level; ?>">
+                        <?php foreach($group as $error) { ?>
+                            <li><?php echo $error; ?></li>
+                        <?php } ?>
+                    </ul>
+                    <?php }?>
+                </div>
+                <?php 
+                    }
+                    if(count($this->_messages)){
+                ?>
+                <div id="liste-messages">
+                    <ul>
+                        <?php foreach($this->_messages as $message) { ?>
+                            <li><?php echo $message; ?></li>
+                        <?php } ?>
+                    </ul>
+                </div>
                 <?php
+                    }
                     $this->render();
                 ?>
             </section>
