@@ -2,8 +2,8 @@
 
 namespace Controllers;
 
-class ContributionController extends \Picon\Lib\Controller{
-    
+class PictureController extends \Picon\Lib\Controller{
+
     public function pre_action(){
         $this->layout   =   "back"; 
         if($this->route["action"] == "listeAdmin"){

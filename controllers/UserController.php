@@ -51,7 +51,8 @@ class UserController extends \Picon\Lib\Controller{
        $this->redirect("/back/login/success");
     }
     
-    public function listeAdminUserAction(){
+    public function listeAdminAction(){
         $this->layout   =   "back";
+        
     }
 }

@@ -2,7 +2,8 @@
 
 namespace Controllers;
 
-class ContributionController extends \Picon\Lib\Controller{
+class CategorieController extends \Picon\Lib\Controller{
+
     
     public function pre_action(){
         $this->layout   =   "back"; 
