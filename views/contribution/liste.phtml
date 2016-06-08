@@ -1,0 +1,41 @@
+<h2>Liste de vos contributions</h2>
+
+<?php if(count($this->listeContrib)) { 
+    $titles =   array(
+        "waiting"   =>  "En attente de validation",
+        "refused"   =>  "Refusées",
+        "validated" =>  "Validée"
+    );
+    foreach($this->listeContrib as $level => $contribs) { ?>
+    <h3><?php echo $titles[$level]; ?></h3>
+
+    <table>
+        <thead>
+            <tr>
+                <td>Sticker</td>
+                <td>Contenu</td>
+                <td>Date et heure</td>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach($contribs as $contrib) {  ?>
+                <tr>
+                    <td><a href="/sticker/id/<?php echo $contrib["id_sticker"] ?>"><?php echo $contrib["title_sticker"] ?></a></td>
+                    <td><?php echo $contrib["contenu"]; ?></td>
+                    <td><?php echo $contrib["date"];?></td>
+                </tr>
+            <?php } ?>
+        
+        </tbody>
+
+    </table>
+
+
+<?php 
+    }
+} else { 
+?>
+<small>Aucune contribution à afficher</small>
+<?php 
+} 
+?>
