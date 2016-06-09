@@ -32,7 +32,7 @@ class StickerModel extends \Picon\Lib\Model{
 
     public function getOne($id){
         $toReturn   =   array();
-        $query      =   self::$db->prepare("select * from stickers where id = ? ;");
+        $query      =   self::$db->prepare("select * from stickers where id = ? && validation = 1;");
         $query->execute(array($id));
         $toReturn   =   $query->fetch();   
         $query->closeCursor();
