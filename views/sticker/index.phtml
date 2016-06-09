@@ -1,31 +1,31 @@
-<h1><?php echo $this->sticker["title"]; ?></h1>
+<h2><?php echo $this->sticker["title"]; ?></h2>
 
 
 <div>
-    <h2>Photos</h2>
+    <h3>Photos</h3>
     <?php if($this->pictures) { ?>
 
     <?php } else { ?>
-        <small>Aucune photo à afficher... <small>
+        <small>Aucune photo à afficher... </small>
         <?php if($this->isLoggedIn){ ?>
-            <small><a href="/edit/sticker/id/<?php echo $this->sticker["id"]; ?>#add-picture"/>Ajouter des photos</a></small>
+            <small><a href="/edit/sticker/id/<?php echo $this->sticker["id"]; ?>#add-picture">Ajouter des photos</a></small>
     <?php }
     } ?>
 
 </div>
 
 <div>
-    <h2>Information</h2>
+    <h3>Information</h3>
     <?php 
         if($this->infos && trim($this->infos["content"])){ 
             if($this->isLoggedIn){ ?>
-                <small><a href="/edit/sticker/id/<?php echo $this->sticker["id"]; ?>#edit-infos"/>Editer</a></small>
+                <small><a href="/edit/sticker/id/<?php echo $this->sticker["id"]; ?>#edit-infos">Editer</a></small>
     <?php }
-            echo $this->infos["content"]; 
+            echo "<p>" . $this->infos["content"] . "</p>"; 
         } else { ?>
         <small>Aucune information n'existe pour ce sticker...</small>
         <?php if($this->isLoggedIn){ ?>
-            <small><a href="/edit/sticker/id/<?php echo $this->sticker["id"]; ?>#edit-infos"/>Ajouter des informations</a></small>
+            <small><a href="/edit/sticker/id/<?php echo $this->sticker["id"]; ?>#edit-infos">Ajouter des informations</a></small>
     <?php }
     } ?>
 </div>

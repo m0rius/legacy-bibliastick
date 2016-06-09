@@ -11,7 +11,7 @@
                 <img src="/assets/img/logo_64.png" alt="logo" />
                 <h1>Bibliastick</h1>
             </div>
-            <?php if($this->isLoggedIn) { ?>
+            <?php if(isset($this->isLoggedIn) && $this->isLoggedIn) { ?>
             <div>
                 <a href="/back/home">Panel</a>
                 <a href="/back/logout">Deconnexion</a>

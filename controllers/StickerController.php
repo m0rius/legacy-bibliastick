@@ -17,8 +17,15 @@ class StickerController extends \Picon\Lib\Controller{
 
         if(in_array($this->route["action"], array("listeAdmin", "liste"))){
             $this->layout   =   "back";
-            $this->set(array("pseudo" =>  $_SESSION["user"]["pseudo"], "authLevel" =>  $this->security->getAuthLevel())); 
+            $this->set(
+                    array(
+                            "pseudo"        =>  $_SESSION["user"]["pseudo"], 
+                            "authLevel"     =>  $this->security->getAuthLevel()
+                        )); 
         }
+        $this->set(array(
+                        "isLoggedIn"    =>  $this->security->isLoggedIn(),
+                    ));
     }
 
     public function indexAction($id = 0){
@@ -32,12 +39,14 @@ class StickerController extends \Picon\Lib\Controller{
                         "sticker"       =>  $stickerInfos,
                         "infos"         =>  $_infos->getOnePerSticker($id),
                         "pictures"      =>  $_pictures->getAllPerSticker($id),
-                        "isLoggedIn"    =>  $this->security->isLoggedIn()
                     ));
     }
 
     public function editAction($id = 0){
+        if($this->route["method"] == "post"){
 
+        }
+        $this->indexAction($id);
     }
 
     public function listeAction($type = ""){
