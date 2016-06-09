@@ -30,23 +30,13 @@ class StickerModel extends \Picon\Lib\Model{
         return $query->fetchAll();
     }
 
-    public function getInfosPerId($id){
-        $infos  =   array();
-        
-        $query  =   self::$db->prepare("select * from stickers where id = ? ;");
+    public function getOne($id){
+        $toReturn   =   array();
+        $query      =   self::$db->prepare("select * from stickers where id = ? ;");
         $query->execute(array($id));
-        $infoSticker    =   $query->fetchAll();
-
-        if($infoSticker){
-            $_infos     =   new \Models\InfoModel();
-            $_pictures  =   new \Models\PictureModel();
-            
-            $infos["sticker"] = $infoSticker[0];
-            $infos["infos"]     =   $_infos->getStickerInfo($id);
-            $infos["pictures"]  =   $_pictures->getStickerPictures($id);
-        }
-
-        return $infos;
+        $toReturn   =   $query->fetch();   
+        $query->closeCursor();
+        return $toReturn;
     }
 
     public function getAll($idAuthor = 0){

@@ -23,10 +23,17 @@ class StickerController extends \Picon\Lib\Controller{
 
     public function indexAction($id = 0){
         $_stickers      =   new \Models\StickerModel();
-        $stickerInfos   =   $_stickers->getInfosPerId($id);
+        $_infos         =   new \Models\InfoModel();
+        $_pictures      =   new \Models\PictureModel();
+        $stickerInfos   =   $_stickers->getOne($id);
         if(!$stickerInfos)
             throw new \Picon\Lib\HttpException(404, "Sticker not found");
-        $this->set(array("infos"    =>  $stickerInfos));
+        $this->set(array(
+                        "sticker"       =>  $stickerInfos,
+                        "infos"         =>  $_infos->getOnePerSticker($id),
+                        "pictures"      =>  $_pictures->getAllPerSticker($id),
+                        "isLoggedIn"    =>  $this->security->isLoggedIn()
+                    ));
     }
 
     public function editAction($id = 0){

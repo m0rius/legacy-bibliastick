@@ -17,4 +17,14 @@ class InfoModel extends \Picon\Lib\Model{
         $query  =   self::$db->prepare("update infos set content = ? where id = ?;");
         return $query->execute(array(trim($content), $id));
     }
+
+    public function getOnePerSticker($idSticker){
+        $query  =   self::$db->prepare("select * from infos where id_sticker = ?");
+        $query->execute(array($idSticker));
+        $toReturn   =   $query->fetch();
+        $query->closeCursor();
+        return $toReturn;
+        
+    }
+
 }
