@@ -17,7 +17,7 @@ if(count($this->listeStickers)) {
             <td>Date de création</td>
             <td>Auteur</td>
             <td>Mail</td>
-            <td><?php echo ($level != "validated" ? "Valider" : "Refuser");?></td>
+            <td>Action</td>
             <td>Supprimer</td>
             <td>Action</td>
         </tr>
@@ -26,11 +26,21 @@ if(count($this->listeStickers)) {
         <?php foreach($liste as $sticker) { ?>
         <form action="/back/admin/liste/stickers" method="post">
             <tr>
-                <td><a href="/sticker/id/<?php echo $sticker["id"]; ?>"><?php echo $sticker["title"]; ?></a></td>
+                <td>
+                    <?php if($level == "validated"){ ?>
+                    <a href="/sticker/id/<?php echo $sticker["id"]; ?>">
+                        <?php echo $sticker["title"]; ?>
+                    </a>
+                    <?php  } else { 
+                        echo $sticker["title"]; 
+                    } ?>
+                </td>
                 <td><?php echo $sticker["creation"]; ?></td>
                 <td><?php echo $sticker["pseudo_author"]; ?></td>
                 <td><?php echo $sticker["mail_author"]; ?></td>
-                <td><input name="<?php echo ($level != "validated" ? "validate" : "refuse");?>" type="checkbox" value="<?php echo ($level != "validated" ? "validate" : "refuse");?>" /></td>
+                <td>
+                    <?php if($level != "validated") { ?><input name="validation" type="radio" value="validate"/> Valider</br><?php } ?>
+                    <?php if($level != "refused") { ?><input name="validation" type="radio" value="refuse"/>Refuser<?php } ?>
                 <td><input name="delete" type="checkbox" value="delete"/></td>
                 <td>
                     <input name="id" type="hidden" value="<?php echo $sticker["id"]; ?>"/>

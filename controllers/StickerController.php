@@ -67,10 +67,12 @@ class StickerController extends \Picon\Lib\Controller{
             if(isset($_POST["id"])){
                 if(isset($_POST["delete"]) && $_POST["delete"]){
                     $_stickers->delete($_POST["id"]);
-                } else if(isset($_POST["validate"]) && $_POST["validate"]){
-                    $_stickers->updateValidation($_POST["id"], 1);
-                } else if(isset($_POST["refuse"]) && $_POST["refuse"]){
-                    $_stickers->updateValidation($_POST["id"], 2);
+                } else if(isset($_POST["validation"])) {
+                    if($_POST["validation"] == "validate"){
+                        $_stickers->updateValidation($_POST["id"], 1);
+                    } else if($_POST["validation"] == "refuse"){
+                        $_stickers->updateValidation($_POST["id"], 2);
+                    }
                 }
             } else {
                 $this->sendViewError("Bad inputs");
