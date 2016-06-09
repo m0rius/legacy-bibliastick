@@ -10,6 +10,7 @@ class HomeController extends \Picon\Lib\Controller{
     }
 
     public function indexAction(){
+        $this->layout = "";
 
     }
 
