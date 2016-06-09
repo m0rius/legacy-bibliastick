@@ -12,7 +12,7 @@ class PictureModel extends \Picon\Lib\Model{
     }
     
     public function getAllPerSticker($idSticker){
-        $query  =   self::$db->prepare("select p.name as name, p.type as type, p.color as color, u.content as legende from pictures as p join infos as i on i.id_picture = p.id where p.validation = 1 && p.id_sticker = ?;");
+        $query  =   self::$db->prepare("select p.id as id, p.name as name, p.type as type, p.color as color, u.content as legende from pictures as p join infos as i on i.id_picture = p.id where p.validation = 1 && p.id_sticker = ?;");
         $query->execute(array($idSticker));
         return $query->fetchAll();
     }
