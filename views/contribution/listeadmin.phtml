@@ -17,7 +17,7 @@
                 <td>Date et heure</td>
                 <td>Auteur</td>
                 <td>Mail</td>
-                <td><?php echo ($level != "validated" ? "Valider" : "Refuser");?></td>
+                <?php if($level != "refused") { ?><td>Validation</td><?php } ?>
                 <td>Supprimer</td>
                 <td>Action</td>
             </tr>
@@ -31,7 +31,12 @@
                     <td><?php echo $contrib["date"];?></td>
                     <td><?php echo $contrib["pseudo_author"];?></td>
                     <td><a href="mailto:<?php echo $contrib["mail_author"];?>"><?php echo $contrib["mail_author"];?></a></td>
-                    <td><input name="<?php echo ($level != "validated" ? "validate" : "refuse");?>" type="checkbox" value="<?php echo ($level != "validated" ? "validate" : "refuse");?>" /></td>
+                    <?php if($level != "refused") { ?>
+                        <td>
+                            <input name="validation" value="validate" type="radio"/>Valider<br/>
+                            <input name="validation" value="refuse" type="radio" />Refuser
+                        </td>
+                    <?php } ?>
                     <td><input name="delete" type="checkbox" value="delete" /></td>
                     <td>
                         <input type="hidden" name="id" value="<?php echo $contrib["id"]; ?>"/>

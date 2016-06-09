@@ -6,7 +6,7 @@ class ContributionModel extends \Picon\Lib\Model{
 
     public function createNew($content, $idInfo, $idAuthor){
         $query  =   self::$db->prepare('insert into contributions (content, validation, creation, id_author, id_info) values (?, 3, NOW(), ?, ?);'); 
-        $query->execute(array($content, $idAuthor, $idInfo));
+        $query->execute(array(trim($content), $idAuthor, $idInfo));
 
     }
 
@@ -42,8 +42,38 @@ class ContributionModel extends \Picon\Lib\Model{
     }
 
     public function updateValidation($id, $lvValidation){
+        $query  =   self::$db->prepare("select content, validation, id_info from contributions where id = ?;");
+        $query->execute(array($id));
+        $currentInfos   =   $query->fetchAll();
+        $currentInfos   =   !$currentInfos ? array() : $currentInfos[0];
+
         $query  =   self::$db->prepare("update contributions set validation = ? where id = ?;");
         $query->execute(array($lvValidation, $id));
 
+        // When we validate a contrib previously waiting for valdation, we update info content
+        if($lvValidation == 1 && isset($currentInfos["validation"]) && $currentInfos["validation"] == 3){
+            $_infos =   new \Models\InfoModel();
+
+            $query  =   self::$db->prepare("select content, validation, id_info from contributions where id = ?;");
+            $query->execute(array($id));
+
+            $infosContrib  =   $query->fetchAll()[0];
+            $_infos->updateContent($infosContrib["id_info"], $infosContrib["content"]);
+        }
+        /*  If we refuse a contrib previously validated, we rollback info content 
+            with the previous contib content */
+        if($lvValidation == 2 && isset($currentInfos["validation"]) && $currentInfos["validation"] == 1 ){
+            $_infos =   new \Models\InfoModel();
+            $query  =   self::$db->prepare("select content from contributions where id_info = ? && validation = 1 order by id desc limit 1;");
+            $query->execute(array($currentInfos["id_info"]));
+
+            $tmp        =   $query->fetchAll();
+            $idInfo     =   $currentInfos["id_info"];
+            // If there was no previous contrib on this info
+            $content    =   (count($tmp)) ? $tmp["content"] : "";
+
+            $_infos->updateContent($idInfo, $content);
+        }
     }
+
 }

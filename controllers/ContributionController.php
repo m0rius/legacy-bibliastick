@@ -31,10 +31,12 @@ class ContributionController extends \Picon\Lib\Controller{
             if(isset($_POST["id"])){
                 if(isset($_POST["delete"]) && $_POST["delete"]){
                     $_contribution->delete($_POST["id"]);
-                } else if(isset($_POST["validate"]) && $_POST["validate"]){
-                    $_contribution->updateValidation($_POST["id"], 1);
-                } else if(isset($_POST["refuse"]) && $_POST["refuse"]){
-                    $_contribution->updateValidation($_POST["id"], 2);
+                } else if(isset($_POST["validation"])){
+                    if($_POST["validation"] == "validate"){
+                        $_contribution->updateValidation($_POST["id"], 1);
+                    } else if($_POST["validation"] == "refuse"){
+                        $_contribution->updateValidation($_POST["id"], 2);
+                    }
                 }
             } else {
                 $this->sendViewError("Bad inputs");
@@ -43,7 +45,6 @@ class ContributionController extends \Picon\Lib\Controller{
         $this->set(array(
                         "listeContrib"  =>  $_contribution->getAll()
                     ));
-
     }
 
 }
