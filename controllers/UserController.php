@@ -33,6 +33,7 @@ class UserController extends \Picon\Lib\Controller{
    }
 
     public function loginAction(){
+        $this->layout   =   "";
         if($this->route["method"] == "POST"){
             if(
                 isset($_POST["pseudo"]) && $_POST["pseudo"] && 
@@ -52,6 +53,7 @@ class UserController extends \Picon\Lib\Controller{
     }
 
     public function logoutAction(){
+        $this->layout   =   "";
         $this->security->unsetSessionInfos(); 
         $this->sendViewMessage("Déconnexion réussie!", 2);
         $this->redirect("/back/login");

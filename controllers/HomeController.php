@@ -7,6 +7,9 @@ class HomeController extends \Picon\Lib\Controller{
     public function pre_action(){
         $this->security->disable();
         parent::pre_action();
+        $this->set(array(
+                        "isLoggedIn"    =>  $this->security->isLoggedIn(),
+                    ));
     }
 
     public function indexAction(){
