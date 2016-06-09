@@ -1,0 +1,51 @@
+<h2>Administration des stickers</h2>
+
+<?php 
+if(count($this->listeStickers)) { 
+    $title  =   array(
+        "validated" =>  "Validés",
+        "refused"   =>  "Refusés",
+        "waiting"   =>  "En attente de validation"
+    );
+    foreach($this->listeStickers as $category =>  $liste){
+?>
+<h3><?php echo $title[$category]; ?></h3>
+<table>
+    <thead>
+        <tr>
+            <td>Titre</td>  
+            <td>Date de création</td>
+            <td>Auteur</td>
+            <td>Mail</td>
+            <td>Valider</td>
+            <td>Supprimer</td>
+            <td>Action</td>
+        </tr>
+    </thead>
+    <tbody>
+        <?php foreach($liste as $sticker) { ?>
+        <form action="/back/admin/liste/stickers" method="post">
+            <tr>
+                <td><a href="/sticker/id/<?php echo $sticker["id"]; ?>"><?php echo $sticker["title"]; ?></a></td>
+                <td><?php echo $sticker["creation"]; ?></td>
+                <td><?php echo $sticker["pseudo_author"]; ?></td>
+                <td><?php echo $sticker["mail_author"]; ?></td>
+                <td><input name="validate" type="checkbox" value="validate"/></td>
+                <td><input name="delete" type="checkbox" value="delete"/></td>
+                <td>
+                    <input name="id" type="hidden" value="<?php echo $sticker["id"]; ?>"/>
+                    <input type="submit" value="Mettre à jour"/>
+                </td>
+            </tr>
+        </form>
+        <?php } ?>
+    </tbody>
+</table>
+
+<?php } 
+} else { ?>
+
+<small>Aucun contenu à afficher</small>
+
+<?php }?>
+

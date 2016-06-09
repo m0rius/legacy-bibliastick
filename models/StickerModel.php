@@ -49,7 +49,7 @@ class StickerModel extends \Picon\Lib\Model{
         return $infos;
     }
 
-    public function getAllStickersPerAuthor($idAuthor){
+    public function getAll($idAuthor = 0){
         $toReturn   =   array();
         $levels     =   array(
             1   =>  "validated",
@@ -57,7 +57,7 @@ class StickerModel extends \Picon\Lib\Model{
             3   =>  "waiting"
         );
         foreach($levels as $num => $level){
-            $results    =   $this->getStickersPerAuthorAndValidation($idAuthor, $num);
+            $results    =   $this->getStickersPerValidation($num, $idAuthor);
             if($results){
                 $toReturn[$level]   =   $results;
             }
@@ -65,9 +65,12 @@ class StickerModel extends \Picon\Lib\Model{
         return $toReturn;
     }
 
-    public function getStickersPerAuthorAndValidation($id, $lvValidation){
-        $query  =   self::$db->prepare("select * from stickers where validation = ? && id_author = ?;");
-        $query->execute(array($lvValidation, $id));
+    public function getStickersPerValidation($lvValidation, $idAuthor = 0){
+        $sql    =   "select s.id as id, s.title as title, s.creation as creation, u.pseudo as pseudo_author, u.mail as mail_author from stickers as s join users as u on s.id_author = u.id where s.validation = ? " . ($idAuthor ? "&& s.id_author = ? " : "") . ";";
+        $args   =   array($lvValidation);
+        $idAuthor && $args[] = $idAuthor;
+        $query  =   self::$db->prepare($sql);
+        $query->execute($args);
         return $query->fetchAll();
     }
 
@@ -93,5 +96,15 @@ class StickerModel extends \Picon\Lib\Model{
         $_contribution->createNew($description, $idInfo, $idAuthor);
     }
 
+
+    public function delete($id){
+        $query  =   self::$db->prepare("delete from stickers where id = ?;");
+        return $query->execute(array($id));
+    }
+
+    public function updateValidation($id, $lvValidation){
+        $query  =   self::$db->prepare("update stickers set validation = ? where id = ?;");
+        $query->execute(array($lvValidation, $id));
+    }
 
 }

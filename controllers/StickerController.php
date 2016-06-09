@@ -48,15 +48,31 @@ class StickerController extends \Picon\Lib\Controller{
 
         $this->set(array(
                         "perso"         =>  true && $type,
-                        "listeAuteur"   =>  $type ? array() : $_stickers->getAllStickersPerAuthor($idUser),
+                        "listeAuteur"   =>  $type ? array() : $_stickers->getAll($idUser),
                         "listePerso"    =>  $type ? $_stickers->getStickerListe($idUser) : array()
                     )
                 );
     }
 
     Public function listeAdminAction(){
-        $this->layout   =   "back";
-
+        $_stickers  =   new \Models\StickerModel();
+        if($this->route["method"]   ==  "POST"){
+            if(isset($_POST["id"])){
+                if(isset($_POST["delete"]) && $_POST["delete"]){
+                    $_stickers->delete($_POST["id"]);
+                } else if(isset($_POST["validate"]) && $_POST["validate"]){
+                    $_stickers->updateValidation($_POST["id"], 1);
+                } else {
+                    $_stickers->updateValidation($_POST["id"], 2);
+                }
+            } else {
+                $this->sendViewError("Bad inputs");
+            }
+        }
+        $this->set(array(
+                        "listeStickers" =>  $_stickers->getAll()
+                    )
+                );
     }
 
 
