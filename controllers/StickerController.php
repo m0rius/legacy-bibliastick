@@ -62,7 +62,7 @@ class StickerController extends \Picon\Lib\Controller{
                     $_stickers->delete($_POST["id"]);
                 } else if(isset($_POST["validate"]) && $_POST["validate"]){
                     $_stickers->updateValidation($_POST["id"], 1);
-                } else {
+                } else if(isset($_POST["refuse"]) && $_POST["refuse"]){
                     $_stickers->updateValidation($_POST["id"], 2);
                 }
             } else {

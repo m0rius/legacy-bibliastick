@@ -33,7 +33,7 @@ class ContributionController extends \Picon\Lib\Controller{
                     $_contribution->delete($_POST["id"]);
                 } else if(isset($_POST["validate"]) && $_POST["validate"]){
                     $_contribution->updateValidation($_POST["id"], 1);
-                } else {
+                } else if(isset($_POST["refuse"]) && $_POST["refuse"]){
                     $_contribution->updateValidation($_POST["id"], 2);
                 }
             } else {

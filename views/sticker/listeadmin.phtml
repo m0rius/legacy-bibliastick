@@ -7,9 +7,9 @@ if(count($this->listeStickers)) {
         "refused"   =>  "Refusés",
         "waiting"   =>  "En attente de validation"
     );
-    foreach($this->listeStickers as $category =>  $liste){
+    foreach($this->listeStickers as $level =>  $liste){
 ?>
-<h3><?php echo $title[$category]; ?></h3>
+<h3><?php echo $title[$level]; ?></h3>
 <table>
     <thead>
         <tr>
@@ -17,7 +17,7 @@ if(count($this->listeStickers)) {
             <td>Date de création</td>
             <td>Auteur</td>
             <td>Mail</td>
-            <td>Valider</td>
+            <td><?php echo ($level != "validated" ? "Valider" : "Refuser");?></td>
             <td>Supprimer</td>
             <td>Action</td>
         </tr>
@@ -30,7 +30,7 @@ if(count($this->listeStickers)) {
                 <td><?php echo $sticker["creation"]; ?></td>
                 <td><?php echo $sticker["pseudo_author"]; ?></td>
                 <td><?php echo $sticker["mail_author"]; ?></td>
-                <td><input name="validate" type="checkbox" value="validate"/></td>
+                <td><input name="<?php echo ($level != "validated" ? "validate" : "refuse");?>" type="checkbox" value="<?php echo ($level != "validated" ? "validate" : "refuse");?>" /></td>
                 <td><input name="delete" type="checkbox" value="delete"/></td>
                 <td>
                     <input name="id" type="hidden" value="<?php echo $sticker["id"]; ?>"/>

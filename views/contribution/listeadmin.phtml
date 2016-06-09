@@ -1,4 +1,4 @@
-<h2>Liste des contributions</h2>
+<h2>Administration des contributions</h2>
 
 <?php if(count($this->listeContrib)) { 
     $titles =   array(
@@ -17,7 +17,7 @@
                 <td>Date et heure</td>
                 <td>Auteur</td>
                 <td>Mail</td>
-                <td>Valider</td>
+                <td><?php echo ($level != "validated" ? "Valider" : "Refuser");?></td>
                 <td>Supprimer</td>
                 <td>Action</td>
             </tr>
@@ -31,7 +31,7 @@
                     <td><?php echo $contrib["date"];?></td>
                     <td><?php echo $contrib["pseudo_author"];?></td>
                     <td><a href="mailto:<?php echo $contrib["mail_author"];?>"><?php echo $contrib["mail_author"];?></a></td>
-                    <td><input name="validate" type="checkbox" value="validate" /></td>
+                    <td><input name="<?php echo ($level != "validated" ? "validate" : "refuse");?>" type="checkbox" value="<?php echo ($level != "validated" ? "validate" : "refuse");?>" /></td>
                     <td><input name="delete" type="checkbox" value="delete" /></td>
                     <td>
                         <input type="hidden" name="id" value="<?php echo $contrib["id"]; ?>"/>
