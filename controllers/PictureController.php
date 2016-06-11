@@ -13,6 +13,18 @@ class PictureController extends \Picon\Lib\Controller{
         $this->set(array("pseudo" =>  $_SESSION["user"]["pseudo"], "authLevel" =>  $this->security->getAuthLevel())); 
     }
 
+    public function indexAction($filename = ""){
+        $path    =      \Picon\Lib\Config::get_value("ROOT")
+                    .   \Picon\Lib\Config::get_value("sticker_folder", "path")
+                    .   "/" .$filename;
+        if(is_file($path)){
+           header("Content-type: " . image_type_to_mime_type(exif_imagetype($path)));
+           echo file_get_contents($path);
+        } else {
+            throw new HttpException(404);
+        }
+    }
+
     // Auth level : 1
     public function listeAction(){
 
