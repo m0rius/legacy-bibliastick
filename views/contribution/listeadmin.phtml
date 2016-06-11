@@ -27,8 +27,8 @@
             <form action="/back/admin/liste/contributions" method="post">
                 <tr>
                     <td>
-                       <?php if($contrib["id_picture"]) { ?><a href="/picture/<?php echo $contrib["name_picture"] ?>">#<?php echo $contrib["id_picture"] ; ?></a>
-                       <?php } if($contrib["id_sticker"]) {  ?><a href="/sticker/id/<?php echo $contrib["id_sticker"] ?>"><?php echo $contrib["title_sticker"] ?></a></td>
+                       <?php if($contrib["id_picture"]) { ?>[p] <a href="/picture/<?php echo $contrib["name_picture"] ?>">#<?php echo $contrib["id_picture"] ; ?></a>
+                       <?php } if($contrib["id_sticker"]) {  ?>[s] <a href="/sticker/id/<?php echo $contrib["id_sticker"] ?>"><?php echo $contrib["title_sticker"] ?></a></td>
                        <?php } ?>
                     <td><textarea name="content" cols="30" rows="5"><?php echo $contrib["contenu"]; ?></textarea></td>
                     <td><?php echo $contrib["date"];?></td>
