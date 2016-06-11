@@ -50,29 +50,21 @@ class StickerController extends \Picon\Lib\Controller{
 
         if($this->route["method"] == "POST"){
             if(isset($_POST["editaction"])){
+
                 switch($_POST["editaction"]) {
+
+                    /****** ADD A NEW MICTURE *****/
                     case "add-picture":
-                        $_pictures      =   new \Models\PictureModel();      
-                        $storagePath    =       \Picon\Lib\Config::get_value("ROOT")
-                                            .   \Picon\Lib\Config::get_value("sticker_folder", "path");
-                        if(isset($_FILES["new_picture_sticker"]) ){
-                            if($_FILES["new_picture_sticker"]["error"]){
-                                echo $_FILES["new_picture_sticker"]["error"];
-                            } else if(
-                                        is_dir($storagePath) && is_writable($storagePath)
-                                        &&  ($tmpName   =   $_FILES["new_picture_sticker"]["tmp_name"])
-                                )
-                            {
-                                $pictureInfos   =   array(
-                                    "name"  =>   sha1(time().$_SESSION["user"]["id"]) . image_type_to_extension(exif_imagetype($tmpName))
-                                );
-                                move_uploaded_file($tmpName, $storagePath . "/" . $pictureInfos["name"]);
-                                $pictureInfos["color"]  =   $_pictures->getColorFromFile($storagePath . "/" . $pictureInfos["name"]);
-                                $_pictures->createNew($pictureInfos["name"], $_POST["description"], $_POST["type"], $pictureInfos["color"], $_SESSION["user"]["id"], $id);
-                            }
-                        }
+                        $this->AddPictureHandler();
+                        break;
+                    case "edit-legende":
 
+                        break;
+                    case "edit-information":
 
+                        break;
+
+                    case "add-category":
 
                         break;
                     default:
@@ -92,6 +84,40 @@ class StickerController extends \Picon\Lib\Controller{
                         "infos"         =>  $_infos->getOnePerSticker($id),
                         "pictures"      =>  $_pictures->getAllPerSticker($id),
                     ));
+    }
+
+    private function AddPictureHandler(){
+        $_pictures      =   new \Models\PictureModel();      
+        $storagePath    =       \Picon\Lib\Config::get_value("ROOT")
+                            .   \Picon\Lib\Config::get_value("sticker_folder", "path");
+        
+        // Check if need post data are set
+        if( isset($_FILES["new_picture_sticker"]) && isset($_POST["description"]) && isset($_POST["type"]) && in_array($_POST["type"], array(2,3))){
+            // Check if there are errors
+            if($_FILES["new_picture_sticker"]["error"]){
+                $errorArray =   array(
+                    UPLOAD_ERR_INI_SIZE     =>  "Le fichier envoyé est trop volumineux",
+                    UPLOAD_ERR_FORM_SIZE    =>  "Le fichier envoyé est trop volumineux",
+                    UPLOAD_ERR_PARTIAL      =>  "Le téléchargement ne s'est pas terminé correctement, veuillez recommencer",
+                    UPLOAD_ERR_NO_FILE      =>  "Aucun fichier n'a été téléchargé, veuillez recommencer",
+                    UPLOAD_ERR_NO_TMP_DIR   =>  "Erreur interne",
+                    UPLOAD_ERR_CANT_WRITE   =>  "Erreur interne",
+                    UPLOAD_ERR_EXTENSION    =>  "Erreur interne" 
+                );
+                $this->sendViewError($errorArray[$_FILES["new_picture_sticker"]["error"]]);
+
+            // Check if storage dir is writable and if a tmp name file exixts
+            } else if(  is_dir($storagePath) && is_writable($storagePath)
+                        &&  ($tmpName   =   $_FILES["new_picture_sticker"]["tmp_name"]) ) {
+                $pictureInfos   =   array(
+                    "name"  =>   sha1(time().$_SESSION["user"]["id"]) . image_type_to_extension(exif_imagetype($tmpName))
+                );
+                move_uploaded_file($tmpName, $storagePath . "/" . $pictureInfos["name"]);
+                $pictureInfos["color"]  =   $_pictures->getColorFromFile($storagePath . "/" . $pictureInfos["name"]);
+                $_pictures->createNew($pictureInfos["name"], $_POST["description"], $_POST["type"], $pictureInfos["color"], $_SESSION["user"]["id"], $id);
+            }
+        }
+
     }
 
     public function listeAction($type = ""){
