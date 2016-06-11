@@ -14,7 +14,7 @@ class PictureModel extends \Picon\Lib\Model{
     }
     
     public function getAllPerSticker($idSticker){
-        $query  =   self::$db->prepare("select p.id as id, p.name as name, p.type as type, p.color as color, u.content as legende from pictures as p join infos as i on i.id_picture = p.id where p.validation = 1 && p.id_sticker = ?;");
+        $query  =   self::$db->prepare("select p.id as id, p.name as name, p.type as type, p.color as color, i.id as legende_id, i.content as legende from pictures as p join infos as i on i.id_picture = p.id where p.validation = 1 && p.id_sticker = ?;");
         $query->execute(array($idSticker));
         return $query->fetchAll();
     }
@@ -31,6 +31,39 @@ class PictureModel extends \Picon\Lib\Model{
 
         $_contributions->createNew($legend, $_infos->createNewForPicture($id, $idAuthor), $idAuthor);
 
+    }
+
+    public function getAll($idAuthor = 0){
+        $toReturn   =   array();
+        $levels     =   array(
+            1   =>  "validated",
+            2   =>  "refused",
+            3   =>  "waiting"
+        );
+        foreach($levels as $num => $level){
+            $results    =   $this->getPicturesPerValidation($num, $idAuthor);
+            if($results){
+                $toReturn[$level]   =   $results;
+            }
+        }
+        return $toReturn;
+    }
+
+    public function getPicturesPerValidation($lvValidation, $idAuthor = 0){
+        $sql    =   "select 
+                        p.id as id, p.name as name, p.creation as creation,
+                        u.pseudo as pseudo_author, u.mail as mail_author 
+                    from 
+                        pictures as p
+                    join 
+                        users as u on p.id_author = u.id 
+                    where 
+                        p.validation = ? " . ($idAuthor ? "&& p.id_author = ? " : "") . ";";
+        $args   =   array($lvValidation);
+        $idAuthor && $args[] = $idAuthor;
+        $query  =   self::$db->prepare($sql);
+        $query->execute($args);
+        return $query->fetchAll();
     }
 
     public function getColorFromFile($file){

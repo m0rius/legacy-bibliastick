@@ -21,12 +21,18 @@ class PictureController extends \Picon\Lib\Controller{
            header("Content-type: " . image_type_to_mime_type(exif_imagetype($path)));
            echo file_get_contents($path);
         } else {
-            throw new HttpException(404);
+            throw new \Picon\Lib\HttpException(404);
         }
     }
 
     // Auth level : 1
     public function listeAction(){
+        $idUser     =   $_SESSION["user"]["id"];
+        $_pictures  =   new \Models\PictureModel();
+        $this->set(array(
+                        "listes"   => $_pictures->getAll($idUser),
+                    )
+                );
 
     }
 
