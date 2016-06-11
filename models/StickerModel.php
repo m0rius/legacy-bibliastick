@@ -88,6 +88,9 @@ class StickerModel extends \Picon\Lib\Model{
 
 
     public function delete($id){
+        $_pictures   =   new \Models\PictureModel();
+        $_pictures->deleteAllForSticker($id);
+
         $query  =   self::$db->prepare("delete from stickers where id = ?;");
         return $query->execute(array($id));
     }

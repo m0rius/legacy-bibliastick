@@ -33,12 +33,30 @@ class PictureController extends \Picon\Lib\Controller{
                         "listes"   => $_pictures->getAll($idUser),
                     )
                 );
-
     }
 
     // Auth level : 2
     public function listeAdminAction(){
-
+        $_pictures  =   new \Models\PictureModel();
+        if($this->route["method"]   ==  "POST"){
+            if(isset($_POST["id"])){
+                if(isset($_POST["delete"]) && $_POST["delete"]){
+                    $_pictures->delete($_POST["id"]);
+                } else if(isset($_POST["validation"])) {
+                    if($_POST["validation"] == "validate"){
+                        $_pictures->updateValidation($_POST["id"], 1);
+                    } else if($_POST["validation"] == "refuse"){
+                        $_pictures->updateValidation($_POST["id"], 2);
+                    }
+                }
+            } else {
+                $this->sendViewError("Bad inputs");
+            }
+        }
+        $this->set(array(
+                        "listes" =>  $_pictures->getAll()
+                    )
+                );
     }
 
 }

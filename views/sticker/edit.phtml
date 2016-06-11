@@ -14,6 +14,16 @@
         <input name="editaction" type="hidden" value="add-picture"/>
         <input type="submit" value="Uploader" />
     </form>
+    <?php if(count($this->pictures)) { ?>
+    <h4>Editer les légendes</h4>
+    <ul>
+        <?php foreach($this->pictures as $picture)  { ?>
+            <li>
+                <img src="/picture/<?php echo $picture["name"] ?>" alt=""/>
+            </li>
+        <?php } ?>
+    </ul>
+    <?php } ?>
 
 </div>
 <div id="edit-infos">

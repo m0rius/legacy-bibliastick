@@ -54,7 +54,7 @@ class StickerController extends \Picon\Lib\Controller{
                 switch($_POST["editaction"]) {
 
                     case "add-picture":
-                        $this->AddPictureHandler();
+                        $this->AddPictureHandler($id);
                         break;
                     case "edit-legende":
                         $this->EditPictureLegendHandler();
@@ -88,7 +88,7 @@ class StickerController extends \Picon\Lib\Controller{
 
     }
 
-    private function AddPictureHandler(){
+    private function AddPictureHandler($id){
         $_pictures      =   new \Models\PictureModel();      
         $storagePath    =       \Picon\Lib\Config::get_value("ROOT")
                             .   \Picon\Lib\Config::get_value("sticker_folder", "path");
