@@ -42,11 +42,18 @@ class PictureController extends \Picon\Lib\Controller{
             if(isset($_POST["id"])){
                 if(isset($_POST["delete"]) && $_POST["delete"]){
                     $_pictures->delete($_POST["id"]);
-                } else if(isset($_POST["validation"])) {
-                    if($_POST["validation"] == "validate"){
-                        $_pictures->updateValidation($_POST["id"], 1);
-                    } else if($_POST["validation"] == "refuse"){
-                        $_pictures->updateValidation($_POST["id"], 2);
+                } else {
+                    if(isset($_POST["validation"])) {
+                        if($_POST["validation"] == "validate"){
+                            $_pictures->updateValidation($_POST["id"], 1);
+                        } else if($_POST["validation"] == "refuse"){
+                            $_pictures->updateValidation($_POST["id"], 2);
+                        }
+                    }
+                    if(isset($_POST["type"]) && in_array($_POST["type"], array(1,2,3))){
+                        if($prevId =   $_pictures->updateType($_POST["id"], $_POST["type"])){
+                            $this->sendViewMessage("Attention, le type de la photo n° " . $prevId . " a été modifié!");
+                        }
                     }
                 }
             } else {

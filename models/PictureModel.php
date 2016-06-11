@@ -51,7 +51,7 @@ class PictureModel extends \Picon\Lib\Model{
 
     public function getPicturesPerValidation($lvValidation, $idAuthor = 0){
         $sql    =   "select 
-                        p.id as id, p.name as name, p.creation as creation, 
+                        p.id as id, p.name as name, p.creation as creation, p.type as type, 
                         p.id_sticker as id_sticker, s.title as name_sticker,
                         u.pseudo as pseudo_author, u.mail as mail_author 
                     from 
@@ -98,6 +98,38 @@ class PictureModel extends \Picon\Lib\Model{
     public function updateValidation($id, $lvValidation){
         $query  =   self::$db->prepare("update pictures set validation = ? where id = ?;");
         $query->execute(array($lvValidation, $id));
+    }
+
+    public function updateType($id, $type){
+        $prevId =   0;
+        // First, let's get info about current type
+        $query  =   self::$db->prepare("select type, id_sticker from pictures where id = ?;");
+        $query->execute(array($id));
+        $infos  =   $query->fetchAll();
+
+        // Do we really change the type ?
+        if($infos && $infos[0]["type"] != $type){
+        
+            // Do we set type at "main" ?
+            if($type == 1){
+                $query  =   self::$db->prepare("select id from pictures where type = 1 && id_sticker = ?;");
+                $query->execute(array($infos[0]["id_sticker"]));
+                $infosCurrentMain  =   $query->fetchAll();
+
+                // Is there already a main for this sticker?
+                if($infosCurrentMain){
+                    $query  =   self::$db->prepare("update pictures set type = 2 where id = ?;");
+                    $query->execute(array($infosCurrentMain[0]["id"]));
+                    $prevId =   $infosCurrentMain[0]["id"];
+                }
+            }
+
+            // We update type
+            $query  =   self::$db->prepare("update pictures set type = ? where id = ?;");
+            $query->execute(array($type, $id));
+        }
+
+        return $prevId;
     }
 
     public function getColorFromFile($file){

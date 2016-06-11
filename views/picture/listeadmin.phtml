@@ -14,6 +14,7 @@ if(count($this->listes)) {
     <thead>
         <tr>
             <td>Numéro/lien</td>  
+            <td>Type</td>
             <td>Sticker</td>
             <td>Date de création</td>
             <td>Auteur</td>
@@ -28,6 +29,14 @@ if(count($this->listes)) {
         <form action="/back/admin/liste/pictures" method="post">
             <tr>
                 <td><a href="/picture/<?php echo $picture["name"]; ?>">#<?php echo $picture["id"]; ?></a></td>
+                <td>
+                    <select name="type">
+                        <option value="1" <?php if($picture["type"] == 1){ echo "selected"; }?>>Principale</option>
+                        <option value="2" <?php if($picture["type"] == 2){ echo "selected"; }?>>Commune</option>
+                        <option value="3" <?php if($picture["type"] == 3){ echo "selected"; }?>>Imprimable</option>
+                    </select>
+
+                </td>
                 <td><a href="/sticker/id/<?php echo $picture["id_sticker"] ?>"><?php echo $picture["name_sticker"]; ?></a></td>
                 <td><?php echo $picture["creation"]; ?></td>
                 <td><?php echo $picture["pseudo_author"]; ?></td>
