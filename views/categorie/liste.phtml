@@ -1,0 +1,66 @@
+<h2>Liste de vos catégories</h2>
+
+<h3>Proposer une nouvelle catégorie</h3>
+
+<table>
+    <thead>
+        <tr>
+            <td>Intitulé</td>
+            <td>Parent</td>
+        </tr>
+    </thead>
+    <tbody>
+        <form action="/back/liste/categories" method="post">
+            <tr>
+                <td><input name="title" placeholder="Une nouvelle catégorie"/></td>
+                <td>
+                   <select name="parent">
+                        <option value="0" selected>-- SANS --</option>
+                        <?php foreach($this->fulliste as $category) { ?>
+                        <option value="<?php echo $category["id"]; ?>"><?php echo $category["name"]; ?></option>
+                        <?php } ?>
+                    </select>
+                </td>
+                <td>
+                    <input type="submit" value="Créer"/>
+                </td>
+            </tr>
+        </form>
+    </tbody>
+</table>
+
+<?php 
+if(count($this->listes)) { 
+    $title  =   array(
+        "validated" =>  "Validés",
+        "refused"   =>  "Refusés",
+        "waiting"   =>  "En attente de validation"
+    );
+    foreach($this->listes as $level =>  $liste){
+?>
+<h3><?php echo $title[$level]; ?></h3>
+<table>
+    <thead>
+        <tr>
+            <td>Intitulé</td>
+            <td>Parent</td>
+            <td>Date de création</td>
+        </tr>
+    </thead>
+    <tbody>
+        <?php foreach($liste as $category) { ?>
+            <tr>
+                <td><?php echo $category["name"]; ?></td>
+                <td><?php echo $category["parent"]; ?></td>
+                <td><?php echo $category["creation"]; ?></td>
+            </tr>
+        <?php } ?>
+    </tbody>
+</table>
+
+<?php } 
+} else { ?>
+
+<small>Aucun contenu à afficher</small>
+
+<?php }?>

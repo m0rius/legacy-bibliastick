@@ -1,0 +1,55 @@
+<h2>Gestion des catégories</h2>
+
+<?php 
+if(count($this->listes)) { 
+    $title  =   array(
+        "validated" =>  "Validés",
+        "refused"   =>  "Refusés",
+        "waiting"   =>  "En attente de validation"
+    );
+    foreach($this->listes as $level =>  $liste){
+?>
+<h3><?php echo $title[$level]; ?></h3>
+<table>
+    <thead>
+        <tr>
+            <td>Intitulé</td>
+            <td>Parent</td>
+            <td>Date de création</td>
+            <td>Auteur</td>
+            <td>Mail</td>
+            <td>Action</td>
+            <td>Supprimer</td>
+            <td>Action</td>
+
+        </tr>
+    </thead>
+    <tbody>
+        <?php foreach($liste as $category) { ?>
+        <form action="/back/admin/liste/categories" method="post">
+            <tr>
+                <td><?php echo $category["name"]; ?></td>
+                <td><?php echo $category["parent"]; ?></td>
+                <td><?php echo $category["creation"]; ?></td>
+                <td><?php echo $category["pseudo_author"]; ?></td>
+                <td><?php echo $category["mail_author"]; ?></td>
+                <td>
+                    <?php if($level != "validated") { ?><input name="validation" type="radio" value="validate"/> Valider</br><?php } ?>
+                    <?php if($level != "refused") { ?><input name="validation" type="radio" value="refuse"/>Refuser<?php } ?>
+                <td><input name="delete" type="checkbox" value="delete"/></td>
+                <td>
+                    <input name="id" type="hidden" value="<?php echo $category["id"]; ?>"/>
+                    <input type="submit" value="Mettre à jour"/>
+                </td>
+            </tr>
+        </form>
+        <?php } ?>
+    </tbody>
+</table>
+
+<?php } 
+} else { ?>
+
+<small>Aucun contenu à afficher</small>
+
+<?php }?>
