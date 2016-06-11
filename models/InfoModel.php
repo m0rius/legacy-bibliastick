@@ -13,6 +13,15 @@ class InfoModel extends \Picon\Lib\Model{
         return $query->fetchAll()[0]["id"];
     }
 
+    public function createNewForPicture($idPicture, $idAuthor){
+        $query  =   self::$db->prepare('insert into infos (content, type, creation, modification, id_author, id_picture) value ( "", 1, NOW(), NOW(), ?, ?);');
+        $query->execute(array($idAuthor, $idPicture));
+
+        $query  =   self::$db->prepare("select id from infos where id_picture = ? && id_author = ? order by id desc limit 1");
+        $query->execute(array($idPicture, $idAuthor));
+        return $query->fetchAll()[0]["id"];
+    }
+
     public function updateContent($id, $content){
         $query  =   self::$db->prepare("update infos set content = ? where id = ?;");
         return $query->execute(array(trim($content), $id));

@@ -43,10 +43,55 @@ class StickerController extends \Picon\Lib\Controller{
     }
 
     public function editAction($id = 0){
-        if($this->route["method"] == "post"){
+        $_stickers      =   new \Models\StickerModel();
+        $stickerInfos   =   $_stickers->getOne($id);
+        if(!$stickerInfos)
+            throw new \Picon\Lib\HttpException(404, "Sticker not found");
 
+        if($this->route["method"] == "POST"){
+            if(isset($_POST["editaction"])){
+                switch($_POST["editaction"]) {
+                    case "add-picture":
+                        $_pictures      =   new \Models\PictureModel();      
+                        $storagePath    =       \Picon\Lib\Config::get_value("ROOT")
+                                            .   \Picon\Lib\Config::get_value("sticker_folder", "path");
+                        if(isset($_FILES["new_picture_sticker"]) ){
+                            if($_FILES["new_picture_sticker"]["error"]){
+                                echo $_FILES["new_picture_sticker"]["error"];
+                            } else if(
+                                        is_dir($storagePath) && is_writable($storagePath)
+                                        &&  ($tmpName   =   $_FILES["new_picture_sticker"]["tmp_name"])
+                                )
+                            {
+                                $pictureInfos   =   array(
+                                    "name"  =>   sha1(time().$_SESSION["user"]["id"]) . image_type_to_extension(exif_imagetype($tmpName))
+                                );
+                                move_uploaded_file($tmpName, $storagePath . "/" . $pictureInfos["name"]);
+                                $pictureInfos["color"]  =   $_pictures->getColorFromFile($storagePath . "/" . $pictureInfos["name"]);
+                                $_pictures->createNew($pictureInfos["name"], $_POST["description"], $_POST["type"], $pictureInfos["color"], $_SESSION["user"]["id"], $id);
+                            }
+                        }
+
+
+
+                        break;
+                    default:
+
+                        break;
+                }
+            } else {    
+                $this->sendViewError("Bad inputs");
+            }
         }
-        $this->indexAction($id);
+
+        $_infos         =   new \Models\InfoModel();
+        $_pictures      =   new \Models\PictureModel();
+
+        $this->set(array(
+                        "sticker"       =>  $stickerInfos,
+                        "infos"         =>  $_infos->getOnePerSticker($id),
+                        "pictures"      =>  $_pictures->getAllPerSticker($id),
+                    ));
     }
 
     public function listeAction($type = ""){

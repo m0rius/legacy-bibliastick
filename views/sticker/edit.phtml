@@ -3,13 +3,17 @@
 <div id="add-picture">
     <h3>Photos [edition]</h3>
     <h4>Ajouter</h4>
-    <!--
-    <form action="/edit/sticker/id/<?php echo $this->sticker["id"]; ?>" method="post">
-        <label for="image">Choisir un ficher : </label></label><input name="image" type="file" accept="image/*"/>
-        <label for="description"></label><textarea name="description" cols="30" rows="10"></textarea>
+    <form enctype="multipart/form-data" action="/edit/sticker/id/<?php echo $this->sticker["id"]; ?>" method="post">
+        <label for="new_picture_sticker">Choisir un ficher : </label></label><input name="new_picture_sticker" type="file" accept="image/*"/>
+        <label for="description">Légende</label><textarea name="description" cols="30" rows="10"></textarea>
+        <label for="type">Type</label>
+            <select name="type">
+                <option value="2" selected>Commune</option>
+                <option value="3">Imprimable</option>
+            </select>
+        <input name="editaction" type="hidden" value="add-picture"/>
         <input type="submit" value="Uploader" />
     </form>
-    -->
 
 </div>
 <div id="edit-infos">
