@@ -12,7 +12,7 @@
     <table>
         <thead>
             <tr>
-                <td>Sticker</td>
+                <td>Sticker/Picture</td>
                 <td>Contenu</td>
                 <td>Date et heure</td>
                 <td>Auteur</td>
@@ -26,7 +26,10 @@
             <?php foreach($contribs as $contrib) {  ?>
             <form action="/back/admin/liste/contributions" method="post">
                 <tr>
-                    <td><a href="/sticker/id/<?php echo $contrib["id_sticker"] ?>"><?php echo $contrib["title_sticker"] ?></a></td>
+                    <td>
+                       <?php if($contrib["id_picture"]) { ?><a href="/picture/<?php echo $contrib["name_picture"] ?>">#<?php echo $contrib["id_picture"] ; ?></a>
+                       <?php } if($contrib["id_sticker"]) {  ?><a href="/sticker/id/<?php echo $contrib["id_sticker"] ?>"><?php echo $contrib["title_sticker"] ?></a></td>
+                       <?php } ?>
                     <td><textarea name="content" cols="30" rows="5"><?php echo $contrib["contenu"]; ?></textarea></td>
                     <td><?php echo $contrib["date"];?></td>
                     <td><?php echo $contrib["pseudo_author"];?></td>

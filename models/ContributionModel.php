@@ -27,7 +27,19 @@ class ContributionModel extends \Picon\Lib\Model{
     }
 
     public function getPerValidation($lvValidation, $idAuthor = 0){
-        $sql    =   "select c.id as id, s.title as title_sticker, s.id as id_sticker, c.content as contenu, c.creation as date, u.pseudo as pseudo_author, u.mail as mail_author from contributions as c join infos as i on c.id_info = i.id join stickers as s on s.id = i.id_sticker join users as u on c.id_author = u.id where c.validation = ? " . (($idAuthor) ? "&& c.id_author = ? " : "") . ";"; 
+        $sql    =   "   select c.id as id, c.content as contenu, c.creation as date,
+                        s.title as title_sticker, s.id as id_sticker, 
+                        p.id as id_picture, p.name as name_picture,
+                        u.pseudo as pseudo_author, u.mail as mail_author 
+                        from contributions as c 
+                            join infos as i on c.id_info = i.id 
+                            join users as u on c.id_author = u.id 
+                            left join pictures as p on p.id = i.id_picture
+                            left join stickers as s on s.id = i.id_sticker 
+                        where 
+                            c.validation = ? " 
+                    . (($idAuthor) ? "&& c.id_author = ? " : "") 
+                    . ";"; 
         $args   =   array($lvValidation);
         $idAuthor && $args[] =  $idAuthor;
 
