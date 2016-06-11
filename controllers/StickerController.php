@@ -53,22 +53,20 @@ class StickerController extends \Picon\Lib\Controller{
 
                 switch($_POST["editaction"]) {
 
-                    /****** ADD A NEW MICTURE *****/
                     case "add-picture":
                         $this->AddPictureHandler();
                         break;
                     case "edit-legende":
-
+                        $this->EditPictureLegendHandler();
                         break;
                     case "edit-information":
-
+                        $this->EditStickerInformationHandler();
                         break;
-
                     case "add-category":
-
+                        $this->AddCategoryHandler();
                         break;
                     default:
-
+                        $this->sendViewError("Bad inputs");
                         break;
                 }
             } else {    
@@ -86,11 +84,15 @@ class StickerController extends \Picon\Lib\Controller{
                     ));
     }
 
+    private function EditPictureLegendHandler(){
+
+    }
+
     private function AddPictureHandler(){
         $_pictures      =   new \Models\PictureModel();      
         $storagePath    =       \Picon\Lib\Config::get_value("ROOT")
                             .   \Picon\Lib\Config::get_value("sticker_folder", "path");
-        
+
         // Check if need post data are set
         if( isset($_FILES["new_picture_sticker"]) && isset($_POST["description"]) && isset($_POST["type"]) && in_array($_POST["type"], array(2,3))){
             // Check if there are errors
@@ -117,7 +119,6 @@ class StickerController extends \Picon\Lib\Controller{
                 $_pictures->createNew($pictureInfos["name"], $_POST["description"], $_POST["type"], $pictureInfos["color"], $_SESSION["user"]["id"], $id);
             }
         }
-
     }
 
     public function listeAction($type = ""){
@@ -130,7 +131,6 @@ class StickerController extends \Picon\Lib\Controller{
             } else {
                 $this->sendViewError("Bad inputs");
             }
-
         }
 
         $this->set(array(
@@ -141,7 +141,7 @@ class StickerController extends \Picon\Lib\Controller{
                 );
     }
 
-    Public function listeAdminAction(){
+    public function listeAdminAction(){
         $_stickers  =   new \Models\StickerModel();
         if($this->route["method"]   ==  "POST"){
             if(isset($_POST["id"])){
