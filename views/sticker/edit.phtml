@@ -1,25 +1,34 @@
-<h2>Edition d'un sticker</h2>
+<h2>Edition du sticker <a href="/sticker/id/<?php echo $this->sticker["id"]; ?>" ><?php echo $this->sticker["title"]; ?></a></h2>
 
 <div id="add-picture">
     <h3>Photos [edition]</h3>
     <h4>Ajouter</h4>
-    <form enctype="multipart/form-data" action="/edit/sticker/id/<?php echo $this->sticker["id"]; ?>" method="post">
-        <label for="new_picture_sticker">Choisir un ficher : </label></label><input name="new_picture_sticker" type="file" accept="image/*"/>
-        <label for="description">Légende</label><textarea name="description" cols="30" rows="10"></textarea>
-        <label for="type">Type</label>
-            <select name="type">
-                <option value="2" selected>Commune</option>
-                <option value="3">Imprimable</option>
-            </select>
-        <input name="editaction" type="hidden" value="add-picture"/>
-        <input type="submit" value="Uploader" />
-    </form>
+    <div id="add-photo">
+        <form enctype="multipart/form-data" action="/edit/sticker/id/<?php echo $this->sticker["id"]; ?>" method="post">
+            <label for="new_picture_sticker">Choisir un ficher : </label><input name="new_picture_sticker" type="file" accept="image/*"/>
+            <label for="description">Légende</label><textarea name="description" cols="30" rows="10"></textarea>
+            <label for="type">Type</label>
+                <select name="type">
+                    <option value="2" selected>Commune</option>
+                    <option value="3">Imprimable</option>
+                </select>
+            <input name="editaction" type="hidden" value="add-picture"/>
+            <input type="submit" value="Uploader" />
+        </form>
+    </div>
     <?php if(count($this->pictures)) { ?>
     <h4>Editer les légendes</h4>
     <ul>
         <?php foreach($this->pictures as $picture)  { ?>
-            <li>
+            <li id="edit-legende-<?php echo $picture["legende_id"]; ?>">
                 <img src="/picture/<?php echo $picture["name"] ?>" alt=""/>
+                <form action="/edit/sticker/id/<?php echo $this->sticker["id"]; ?>" method="post">
+                    <label for="legende">Légende</label>
+                    <textarea name="legende" cols="30" rows="10"><?php echo $picture["legende"]; ?></textarea>
+                    <input name="id" type="hidden" value="<?php echo $picture["legende_id"]; ?>" /> 
+                    <input name="editaction" type="hidden" value="edit-legende"/>
+                    <input type="submit" value="Ajouter votre contribution" />
+                </form>
             </li>
         <?php } ?>
     </ul>
@@ -27,7 +36,14 @@
 
 </div>
 <div id="edit-infos">
-    <h3>Informations [edition]</h2>
+    <h3>Informations [edition]</h3>
+    <form action="/edit/sticker/id/<?php echo $this->sticker["id"]; ?>" method="post">
+        <textarea name="description" cols="30" rows="10"><?php echo $this->infos["content"]; ?></textarea>
+        <input name="id" type="hidden" value="<?php echo $this->infos["id"]; ?>" /> 
+        <input name="editaction" type="hidden" value="edit-information"/>
+        <input type="submit" value="Ajouter votre contribution" />
+    </form>
+    
 
 </div>
 

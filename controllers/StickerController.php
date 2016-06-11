@@ -85,7 +85,21 @@ class StickerController extends \Picon\Lib\Controller{
     }
 
     private function EditPictureLegendHandler(){
+        if(isset($_POST["legende"]) && $_POST["legende"] && isset($_POST["id"]) && $_POST["id"]){
+            $_contributions  =   new \Models\ContributionModel();
+            $_contributions->createNew($_POST["legende"], $_POST["id"], $_SESSION["user"]["id"]);
+        }  else {    
+            $this->sendViewError("Bad inputs");
+        }
+    }
 
+    private function EditStickerInformationHandler(){
+        if(isset($_POST["description"]) && $_POST["description"] && isset($_POST["id"]) && $_POST["id"]){
+            $_contributions  =   new \Models\ContributionModel();
+            $_contributions->createNew($_POST["description"], $_POST["id"], $_SESSION["user"]["id"]);
+        }  else {    
+            $this->sendViewError("Bad inputs");
+        }
     }
 
     private function AddPictureHandler($id){

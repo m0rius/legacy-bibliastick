@@ -4,7 +4,19 @@
 <div>
     <h3>Photos</h3>
     <?php if($this->pictures) { ?>
-
+        <ul>
+            <?php foreach($this->pictures as $picture)  { ?>
+                <li>
+                    <img src="/picture/<?php echo $picture["name"] ?>" alt=""/>
+                    <div>
+                        <p><?php echo $picture["legende"]; ?></p>
+                        <?php if($this->isLoggedIn){ ?>
+                            <small><a href="/edit/sticker/id/<?php echo $this->sticker["id"]; ?>#edit-legende-<?php echo $picture["legende_id"]; ?>">Editer</a></small>
+                        <?php } ?>
+                    </div>
+                </li>
+            <?php } ?>
+        </ul>
     <?php } else { ?>
         <small>Aucune photo à afficher... </small>
         <?php if($this->isLoggedIn){ ?>
