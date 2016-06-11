@@ -4,14 +4,78 @@
         <meta charset="UTF-8">
         <title>Bibliastick</title>
         <link rel="icon" type="image/png" href="/assets/img/logo_64.png"/>
+        <link rel="stylesheet" href="/assets/css/font-awesome.css"/>
         <link rel="stylesheet" href="/assets/css/grid.css"/>
         <link rel="stylesheet" href="/assets/css/style.css"/>
     </head>
     <body>
-        <h1>Bibliastick</h1>
-        <form action="/search" method="get">
-            <input name="q" placeholder="Type a keyword, a category, etc..."/>
-            <input type="submit" value"search"/>
-        </form>
+        <div class="container home-content">
+            <h1 class="title"><a href="/"><img src="/assets/img/logo_64.png" alt="logo"/> Biblia<span class="title-bold">stick</span></a></h1>
+            <form class="home-form" action="/search" method="get">
+                <div class="home-form-search">
+                    <input name="q" placeholder="Type a keyword, a category, etc..."/>
+                    <button type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
+                </div>
+            </form>
+        <footer class="container home-footer">
+            <div class="row">
+                <div class="col-o-3 col-2"><a href="">About</a></div>
+                <div class="col-2"><a href="/back/login">Login</a></div>
+                <div class="col-2"><a href="">Legal</a></div>
+            </div>
+        </footer>
+        </div>
+        <style>
+
+            .home-content h1{
+               margin-top : 25%; 
+               margin-bottom : 5%; 
+               font-size: 64px;
+            }
+
+            .home-content h1 img{
+                vertical-align: middle
+            }
+
+            .home-form-search{
+                margin: 0 auto;
+                padding : 5px;
+                width : 75%;
+            }
+
+            .home-form-search input{
+                border: none;
+                background-color : white;
+                width: 75%;
+                font-size : 18px;
+                padding : 5px;
+                border-bottom : 1px solid #D4D4D4; 
+            }
+
+            .home-form-search input:focus{
+                border-bottom : 1px solid #0A4E5C;
+            }
+
+            .home-form-search button{
+                right       :   5px;
+                background : none;
+                border : none;
+            }
+
+            .home-footer{
+                position : fixed;
+                bottom      :   0;
+                text-align : center;
+                padding-bottom : 2%;
+                padding-top : 2%;
+                /* border-top : 1px solid #D4D4D4; */
+            }
+
+            .home-footer a{
+                text-decoration: none;
+                color : #D4D4D4;
+            }
+
+        </style>
     </body>
 </html>

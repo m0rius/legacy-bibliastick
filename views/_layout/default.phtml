@@ -4,26 +4,48 @@
     <meta charset="UTF-8">
     <title>Bibliastick</title>
     <link rel="icon" type="image/png" href="/assets/img/logo_64.png"/>
+    <link rel="stylesheet" href="/assets/css/font-awesome.css"/>
+    <link rel="stylesheet" href="/assets/css/grid.css"/>
+    <link rel="stylesheet" href="/assets/css/style.css"/>
 </head>
     <body>
-        <header>
-            <div class="head-caption">
-                <img src="/assets/img/logo_64.png" alt="logo" />
-                <h1>Bibliastick</h1>
-            </div>
+        <div class="container">
+        <header class="head-caption">
+            <h1 class="title"><a href="/"><img src="/assets/img/logo_32.png" alt="logo"/> Biblia<span class="title-bold">stick</span></a></h1>
             <?php if(isset($this->isLoggedIn) && $this->isLoggedIn) { ?>
-            <div>
-                <a href="/back/home">Panel</a>
-                <a href="/back/logout">Deconnexion</a>
+            <div class="head-caption-actions">
+                <a href="/back/home"><i class="fa fa-tachometer fa-2x" aria-hidden="true"></i></a>
             </div>
             <?php } ?>
             
         </header>
-        <div class="container">
             <?php $this->render(); ?>    
-        </div>
         <footer>
 
         </footer>
+        </div>
+        <style>
+            .head-caption{
+                    
+            }
+
+
+            .head-caption h1, .head-caption div{
+                display: inline-block;
+                margin: 21px 0;
+
+            }
+
+            .head-caption h1 img{
+                vertical-align : middle;
+
+            }
+
+            .head-caption-actions{
+                float: right;
+
+            }
+
+        </style>
     </body>
 </html>
