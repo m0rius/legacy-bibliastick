@@ -1,5 +1,11 @@
 <h2><?php echo $this->sticker["title"]; ?></h2>
 
+<div>
+    <h3>Catégories</h3> 
+    <?php foreach($this->categories as $cat) { ?>
+        <a href="/search?q=<?php echo $cat["name"]; ?>"><?php echo $cat["name"]; ?></a>
+    <?php } ?>
+</div>
 
 <div>
     <h3>Photos</h3>

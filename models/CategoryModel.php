@@ -19,7 +19,7 @@ class CategoryModel extends \Picon\Lib\Model{
     }
 
     public function getAllPerSticker($id){
-        $query  =   self::$db->prepare("select a.id as id, a.name as name from available_categories join effective_categories as e on a.id = e.id_category join stickers as s on e.id_sticker = s.id where s.id = ?;");
+        $query  =   self::$db->prepare("select a.id as id, a.name as name from available_categories as a join effective_categories as e on a.id = e.id_category join stickers as s on e.id_sticker = s.id where s.id = ? && e.validation = 1;");
         $query->execute(array($id));
         return $query->fetchAll();
     }

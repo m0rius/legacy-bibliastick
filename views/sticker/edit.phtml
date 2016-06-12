@@ -11,6 +11,10 @@
         <input name="editaction" type="hidden" value="add-category"/>
         <input type="submit" value="Ajouter" />
     </form>
+    <h4>Catgories déjà affectées</h4>
+    <?php foreach($this->categories as $cat) { ?>
+        <a href="/search?q=<?php echo $cat["name"]; ?>"><?php echo $cat["name"]; ?></a>
+    <?php } ?>
 </div>
 <div id="add-picture">
     <h3>Photos [edition]</h3>
