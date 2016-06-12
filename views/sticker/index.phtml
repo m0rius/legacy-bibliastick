@@ -1,25 +1,39 @@
-<h2><?php echo $this->sticker["title"]; ?></h2>
+<h2 class="sticker-title">
+    <?php echo $this->sticker["title"]; ?>
+    <?php if($this->isLoggedIn){ ?>
+        <small><a href="/edit/sticker/id/<?php echo $this->sticker["id"]; ?>">Editer</a></small>
+    <?php } ?>
+</h2>
 
-<div>
-    <h3>Catégories</h3> 
+<div class="sticker-categories">
+
     <?php foreach($this->categories as $cat) { ?>
-        <a href="/search?q=<?php echo $cat["name"]; ?>"><?php echo $cat["name"]; ?></a>
+        <a href="/search?q=<?php echo $cat["name"]; ?>">#<?php echo $cat["name"]; ?></a>&nbsp;
     <?php } ?>
 </div>
-
-<div>
-    <h3>Photos</h3>
+<h3>Prises de vue</h3>
+<div class="row pictures">
     <?php if($this->pictures) { ?>
-        <ul>
-            <?php foreach($this->pictures as $picture)  { ?>
-                <li>
-                    <img src="/picture/<?php echo $picture["name"] ?>" alt=""/>
-                    <div>
-                        <p><?php echo $picture["legende"]; ?></p>
+        <div class="col-8 showed-picture-caption">
+            <div class="col-12 showed-picture-content">
+                <a id="showed-link" href="/"><img id="showed-picture" src="http://bibliastick.com/picture/854ef6c1292220dafe7a1d44c7eca0a57e27e838.png" alt=""></a>
+            </div>
+            <div id="showed-picture-description" class="col-12 showed-picture-description">
+                
+                 
+            </div>
+        </div>
+        <ul id="listed-pictures" class="col-4 list-pictures">
+            <?php 
+                $type   =   array(1 => "main", 2 => "common", 3 => "printable");
+                foreach($this->pictures as $picture)  { 
+            ?>
+                <li class="available-img">
+                    <img class="sticker-picture-<?php echo $type[$picture["type"]]; ?>" src="/picture/<?php echo $picture["name"] ?>" alt=""/>
+                        <p class="list-picture-legend"><?php echo $picture["legende"]; ?></p>
                         <?php if($this->isLoggedIn){ ?>
                             <small><a href="/edit/sticker/id/<?php echo $this->sticker["id"]; ?>#edit-legende-<?php echo $picture["legende_id"]; ?>">Editer</a></small>
                         <?php } ?>
-                    </div>
                 </li>
             <?php } ?>
         </ul>
@@ -32,19 +46,18 @@
 
 </div>
 
-<div>
-    <h3>Information</h3>
+
+<div class="row sticker-information">
+    <h3>
+        Informations sur le sticker <?php if($this->isLoggedIn){ ?><small><a href="/edit/sticker/id/<?php echo $this->sticker["id"]; ?>#edit-infos">Editer</a></small> <?php } ?>
+    </h3>
     <?php 
         if($this->infos && trim($this->infos["content"])){ 
-            if($this->isLoggedIn){ ?>
-                <small><a href="/edit/sticker/id/<?php echo $this->sticker["id"]; ?>#edit-infos">Editer</a></small>
-    <?php }
             echo "<p>" . $this->infos["content"] . "</p>"; 
         } else { ?>
         <small>Aucune information n'existe pour ce sticker...</small>
-        <?php if($this->isLoggedIn){ ?>
-            <small><a href="/edit/sticker/id/<?php echo $this->sticker["id"]; ?>#edit-infos">Ajouter des informations</a></small>
-    <?php }
-    } ?>
+    <?php } ?>
+    <br/>
+    <br/>
 </div>
 
