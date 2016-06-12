@@ -24,6 +24,18 @@ class CategoryModel extends \Picon\Lib\Model{
         return $query->fetchAll();
     }
 
+    public function getAllAwaitingPerSticker($id){
+        $query  =   self::$db->prepare(
+                                "select 
+                                    a.name as name, DATE(e.creation) as date, u.pseudo as pseudo_author, u.mail as mail_author
+                                from effective_categories as e
+                                join available_categories as a on e.id_category = a.id
+                                join users as u on e.id_author = u.id
+                                where e.validation = 3 && e.id_sticker = ?;");
+        $query->execute(array($id));
+        return $query->fetchAll();
+    }
+
     public function createNewAffectation($idCategory, $idSticker, $idAuthor){
         $query  =   self::$db->prepare("insert into effective_categories (id_category, id_sticker, id_author, creation, validation) values (?, ?, ?, NOW(), 3);");
         return $query->execute(array($idCategory, $idSticker, $idAuthor));

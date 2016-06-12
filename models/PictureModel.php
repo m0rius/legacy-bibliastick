@@ -69,6 +69,37 @@ class PictureModel extends \Picon\Lib\Model{
         return $query->fetchAll();
     }
 
+    public function getAllAwaitLegendPerSticker($id){
+        $query  =   self::$db->prepare(
+                    "select c.id as id, p.id as id_picture, c.content as content, DATE(c.creation) as date,
+                    u.pseudo as pseudo_author, u.mail as mail_author
+                    from pictures as p
+                    join users as u on p.id_author = u.id 
+                    join infos as i on i.id_picture = p.id
+                    join contributions as c on c.id_info = i.id
+                    where c.validation = 3 && p.id_sticker = ?;");
+        $query->execute(array($id));
+        $results    = $query->fetchAll();
+        $toReturn   = array();
+        foreach($results as $result){
+            $toReturn[$result["id_picture"]][]  =   $result;
+        }
+        return $toReturn;
+    }
+
+    public function getAllAwaitPerSticker($id){
+        $query  =   self::$db->prepare(
+                    "select 
+                        p.id as id, p.name as name, DATE(p.creation) date, p.type as type, 
+                        p.id_sticker as id_sticker, 
+                        u.pseudo as pseudo_author, u.mail as mail_author 
+                    from pictures as p
+                    join users as u on p.id_author = u.id 
+                    where p.validation = 3 && p.id_sticker = ?");
+        $query->execute(array($id));
+        return $query->fetchAll();
+    }
+
     public function delete($id){
         $query  =   self::$db->prepare("select name from pictures where id = ?;");
         $query->execute(array($id));

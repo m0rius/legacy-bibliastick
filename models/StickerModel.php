@@ -16,7 +16,7 @@ class StickerModel extends \Picon\Lib\Model{
                                                 left join effective_categories as e on s.id = e.id_sticker
                                                 left join available_categories as a on e.id_category = a.id
                                                 where s.validation = 1 && (s.title like ?
-                                                or a.name like ? && a.validation = 1)");
+                                                or a.name like ? && a.validation = 1) group by s.id");
                 $query->execute(array("%" . $search . "%", "%" . $search . "%" ));
                 break;
             case "date":

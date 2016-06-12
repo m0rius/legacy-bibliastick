@@ -26,6 +26,18 @@ class ContributionModel extends \Picon\Lib\Model{
         return $toReturn;
     }
 
+    public function getAllAwaitingPerSticker($idSticker){
+        $query  =   self::$db->prepare("select c.id as id, c.content as content, DATE(c.creation) as date,
+                                        u.pseudo as pseudo_author, u.mail as mail_author
+                                        from contributions as c
+                                        join infos as i on i.id = c.id_info
+                                        join users as u on u.id = c.id_author
+                                        where c.validation = 3 && i.id_sticker = ?
+                                        order by id desc;");
+        $query->execute(array($idSticker));
+        return $query->fetchAll();
+    }
+
     public function getPerValidation($lvValidation, $idAuthor = 0){
         $sql    =   "   select c.id as id, c.content as contenu, c.creation as date,
                         s.title as title_sticker, s.id as id_sticker, 

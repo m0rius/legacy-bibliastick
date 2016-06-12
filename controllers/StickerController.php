@@ -80,13 +80,18 @@ class StickerController extends \Picon\Lib\Controller{
         $_infos         =   new \Models\InfoModel();
         $_pictures      =   new \Models\PictureModel();
         $_categories    =   new \Models\CategoryModel();
+        $_contributions =   new \Models\ContributionModel();
 
         $this->set(array(
-                        "sticker"       =>  $stickerInfos,
-                        "infos"         =>  $_infos->getOnePerSticker($id),
-                        "pictures"      =>  $_pictures->getAllPerSticker($id),
-                        "categories"    =>  $_categories->getAllPerSticker($id),
-                        "allcategories" =>  $_categories->getFullList()
+                        "sticker"               =>  $stickerInfos,
+                        "infos"                 =>  $_infos->getOnePerSticker($id),
+                        "pictures"              =>  $_pictures->getAllPerSticker($id),
+                        "categories"            =>  $_categories->getAllPerSticker($id),
+                        "allcategories"         =>  $_categories->getFullList(),
+                        "awaitContribInfos"     =>  $_contributions->getAllAwaitingPerSticker($id),
+                        "awaitLegendInfos"      =>  $_pictures->getAllAwaitLegendPerSticker($id),   
+                        "awaitPicturesInfos"    =>  $_pictures->getAllAwaitPerSticker($id),   
+                        "awaitCategoriesInfos"  =>  $_categories->getAllAwaitingPerSticker($id)
                     ));
     }
 

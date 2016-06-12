@@ -11,6 +11,16 @@
         <input name="editaction" type="hidden" value="add-category"/>
         <input type="submit" value="Ajouter" />
     </form>
+    <?php if(count($this->awaitCategoriesInfos)){?>
+        <h4>Attention, il existe déjà des affectations en attente de validation:</h4> 
+        <ul>
+            <?php foreach($this->awaitCategoriesInfos as $await) { ?>
+            <li>
+                <strong><?php echo $await["name"]; ?></strong> <small>Ajouté par <a href="mailto:<?php echo $await["mail_author"]; ?>"/><?php echo $await["pseudo_author"]; ?></a> le <?php echo $await["date"]; ?></small>
+            </li>
+            <?php } ?>
+        </ul>
+    <?php } ?>
     <h4>Catgories déjà affectées</h4>
     <?php foreach($this->categories as $cat) { ?>
         <a href="/search?q=<?php echo $cat["name"]; ?>"><?php echo $cat["name"]; ?></a>
@@ -32,6 +42,17 @@
             <input type="submit" value="Uploader" />
         </form>
     </div>
+    <?php if(count($this->awaitPicturesInfos)){?>
+        <h4>Attention, il existe déjà des photos en attente de validation:</h4> 
+        <ul>
+            <?php foreach($this->awaitPicturesInfos as $await) { ?>
+            <li>
+                <small>Ajouté par <a href="mailto:<?php echo $await["mail_author"]; ?>"/><?php echo $await["pseudo_author"]; ?></a> le <?php echo $await["date"]; ?></small>
+                <img src="/picture/<?php echo $await["name"]?>" alt="<?php echo $await["name"]?>"/>
+            </li>
+            <?php } ?>
+        </ul>
+    <?php } ?>
     <?php if(count($this->pictures)) { ?>
     <h4>Editer les légendes</h4>
     <ul>
@@ -45,6 +66,23 @@
                     <input name="editaction" type="hidden" value="edit-legende"/>
                     <input type="submit" value="Ajouter votre contribution" />
                 </form>
+                <?php if(
+                        isset($this->awaitLegendInfos[$picture["id"]]) && 
+                        count($this->awaitLegendInfos[$picture["id"]])
+                      ){
+                ?>
+                    <h4>Attention, il existe déjà des modifications en attente de validation:</h4> 
+                    <ul>
+                        <?php foreach($this->awaitLegendInfos[$picture["id"]] as $await) { ?>
+                        <li>
+                            <small>Ajouté par <a href="mailto:<?php echo $await["mail_author"]; ?>"/><?php echo $await["pseudo_author"]; ?></a> le <?php echo $await["date"]; ?></small>
+                            <p>
+                                <?php echo $await["content"]; ?>
+                            </p>
+                        </li>
+                        <?php } ?>
+                    </ul>
+                <?php } ?>
             </li>
         <?php } ?>
     </ul>
@@ -53,6 +91,19 @@
 </div>
 <div id="edit-infos">
     <h3>Informations [edition]</h3>
+    <?php if(count($this->awaitContribInfos)){?>
+        <h4>Attention, il existe déjà des contributions en attente de validation:</h4> 
+        <ul>
+            <?php foreach($this->awaitContribInfos as $await) { ?>
+            <li>
+                <small>Ajouté par <a href="mailto:<?php echo $await["mail_author"]; ?>"/><?php echo $await["pseudo_author"]; ?></a> le <?php echo $await["date"]; ?></small>
+                <p>
+                    <?php echo $await["content"]; ?>
+                </p>
+            </li>
+            <?php } ?>
+        </ul>
+    <?php } ?>
     <form action="/edit/sticker/id/<?php echo $this->sticker["id"]; ?>" method="post">
         <textarea name="description" cols="30" rows="10"><?php echo $this->infos["content"]; ?></textarea>
         <input name="id" type="hidden" value="<?php echo $this->infos["id"]; ?>" /> 
