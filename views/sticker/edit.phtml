@@ -1,5 +1,17 @@
 <h2>Edition du sticker <a href="/sticker/id/<?php echo $this->sticker["id"]; ?>" ><?php echo $this->sticker["title"]; ?></a></h2>
 
+<div id="add-category">
+    <h3>Ajouter categories [edition]</h3>
+    <form  action="/edit/sticker/id/<?php echo $this->sticker["id"]; ?>" method="post">
+        <select name="category">
+            <?php foreach($this->allcategories as $cat) { ?>
+                <option value="<?php echo $cat["id"]; ?>"><?php echo $cat["name"]; ?></option>
+            <?php } ?>
+        </select>
+        <input name="editaction" type="hidden" value="add-category"/>
+        <input type="submit" value="Ajouter" />
+    </form>
+</div>
 <div id="add-picture">
     <h3>Photos [edition]</h3>
     <h4>Ajouter</h4>
@@ -43,7 +55,5 @@
         <input name="editaction" type="hidden" value="edit-information"/>
         <input type="submit" value="Ajouter votre contribution" />
     </form>
-    
-
 </div>
 

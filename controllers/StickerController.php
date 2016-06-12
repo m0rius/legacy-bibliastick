@@ -63,7 +63,7 @@ class StickerController extends \Picon\Lib\Controller{
                         $this->EditStickerInformationHandler();
                         break;
                     case "add-category":
-                        $this->AddCategoryHandler();
+                        $this->AddCategoryHandler($id);
                         break;
                     default:
                         $this->sendViewError("Bad inputs");
@@ -76,12 +76,24 @@ class StickerController extends \Picon\Lib\Controller{
 
         $_infos         =   new \Models\InfoModel();
         $_pictures      =   new \Models\PictureModel();
+        $_categories    =   new \Models\CategoryModel();
 
         $this->set(array(
                         "sticker"       =>  $stickerInfos,
                         "infos"         =>  $_infos->getOnePerSticker($id),
                         "pictures"      =>  $_pictures->getAllPerSticker($id),
+                        "categories"    =>  $_categories->getAllPerSticker($id),
+                        "allcategories" =>  $_categories->getFullList()
                     ));
+    }
+
+    private function AddCategoryHandler($id){
+        if(isset($_POST["category"]) && $_POST["category"]){
+            $_contributions  =   new \Models\CategoryModel();
+            $_contributions->createNewAffectation($_POST["category"], $id, $_SESSION["user"]["id"]);
+        }  else {    
+            $this->sendViewError("Bad inputs");
+        }
     }
 
     private function EditPictureLegendHandler(){

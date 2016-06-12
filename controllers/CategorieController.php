@@ -25,7 +25,8 @@ class CategorieController extends \Picon\Lib\Controller{
         }
         $this->set(array(
                         "listes"    =>  $_categories->getAll($idUser),
-                        "fulliste"  =>  $_categories->getFullList()
+                        "fulliste"  =>  $_categories->getFullList(),
+                        "affectations"  =>  $_categories->getAllAffectations()
                     )
                 );
     }
@@ -35,14 +36,14 @@ class CategorieController extends \Picon\Lib\Controller{
         $idUser         =   $_SESSION["user"]["id"];
         $_categories    =   new \Models\CategoryModel();
         if($this->route["method"] == "POST"){
-            if(isset($_POST["id"])){
+            if(isset($_POST["id"]) && isset($_POST["type"])){
                 if(isset($_POST["delete"]) && $_POST["delete"]){
-                    $_categories->delete($_POST["id"]);
+                    $_categories->delete($_POST["type"], $_POST["id"]);
                 } else if(isset($_POST["validation"])) {
                     if($_POST["validation"] == "validate"){
-                        $_categories->updateValidation($_POST["id"], 1);
+                        $_categories->updateValidation($_POST["type"], $_POST["id"], 1);
                     } else if($_POST["validation"] == "refuse"){
-                        $_categories->updateValidation($_POST["id"], 2);
+                        $_categories->updateValidation($_POST["type"], $_POST["id"], 2);
                     }
                 }
             } else {
@@ -50,8 +51,9 @@ class CategorieController extends \Picon\Lib\Controller{
             }
         }
         $this->set(array(
-                        "listes"    =>  $_categories->getAll(),
-                        "fulliste"  =>  $_categories->getFullList()
+                        "listes"        =>  $_categories->getAll(),
+                        "fulliste"      =>  $_categories->getFullList(),
+                        "affectations"  =>  $_categories->getAllAffectations()
                     )
                 );
 
