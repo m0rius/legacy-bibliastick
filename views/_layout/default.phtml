@@ -9,43 +9,25 @@
     <link rel="stylesheet" href="/assets/css/style.css"/>
 </head>
     <body>
-        <div class="container">
         <header class="head-caption">
-            <h1 class="title"><a href="/"><img src="/assets/img/logo_32.png" alt="logo"/> Biblia<span class="title-bold">stick</span></a></h1>
-            <?php if(isset($this->isLoggedIn) && $this->isLoggedIn) { ?>
-            <div class="head-caption-actions">
-                <a href="/back/home"><i class="fa fa-tachometer fa-2x" aria-hidden="true"></i></a>
+            <div class="container">
+                <h1 class="title"><a href="/"><img src="/assets/img/logo_32.png" alt="logo"/> Biblia<span class="title-bold">stick</span></a></h1>
+                <?php if(isset($this->isLoggedIn) && $this->isLoggedIn) { ?>
+                <div class="head-caption-actions">
+                    <a href="/back/home">Pannel</a>
+                </div>
+                <?php } ?>
             </div>
-            <?php } ?>
-            
         </header>
+        <div class="content container">
             <?php $this->render(); ?>    
-        <footer>
-
-        </footer>
         </div>
-        <style>
-            .head-caption{
-                    
-            }
-
-
-            .head-caption h1, .head-caption div{
-                display: inline-block;
-                margin: 21px 0;
-
-            }
-
-            .head-caption h1 img{
-                vertical-align : middle;
-
-            }
-
-            .head-caption-actions{
-                float: right;
-
-            }
-
-        </style>
+        <footer class="footer-caption container">
+            <div class="row">
+                <div class="col-o-3 col-2"><a href="">About</a></div>
+                <div class="col-2"><a href="/back/login">Login</a></div>
+                <div class="col-2"><a href="">Legal</a></div>
+            </div>
+        </footer>
     </body>
 </html>
