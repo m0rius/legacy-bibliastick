@@ -25,9 +25,50 @@ class StickerModel extends \Picon\Lib\Model{
                                         or a.name like ? && a.validation = 1) group by s.id");
                 $query->execute(array("%" . $search . "%", "%" . $search . "%" ));
                 break;
-            case "date":
-                break;
             case "color":
+                $_pictures  =   new \Models\PictureModel();
+                $query      =   self::$db->query("
+                                        select 
+                                            s.id as id, s.title as title, s.validation as validation, 
+                                            s.id_author as author, i.content as infos, p.name as picture,
+                                            p.color as color
+                                        from pictures as p 
+                                        join stickers as s on s.id = p.id_sticker
+                                        join infos as i on i.id_sticker = s.id
+                                        where s.validation = 1 && p.validation = 1
+                                        ");
+                $toReturn   =   array();
+                $tmp        =   array();
+                foreach($query->fetchAll() as $result){
+                    $tmp[$result["id"]][]  =   $result;
+                }
+                foreach($tmp as $sticker => $pictures){
+                    foreach($pictures as $picture){
+                        $found  =   false;
+                        $colors = json_decode($picture["color"]);
+                        foreach($colors as $color){
+                            $_pictures->isColorSemblable($search, $color) && $found = true;
+                        }
+                        if($found){
+                            $toReturn[] =   $picture;
+                        }
+                    }
+                }
+                return $toReturn;
+                break;
+            case "date":
+                $query  =   self::$db->prepare("
+                                        select 
+                                            s.id as id, s.title as title, s.validation as validation, 
+                                            s.id_author as author, i.content as infos, p.name as picture
+                                        from stickers as s 
+                                        join infos as i on i.id_sticker = s.id
+                                        left join pictures as p on p.id_sticker = s.id
+                                        left join effective_categories as e on s.id = e.id_sticker
+                                        left join available_categories as a on e.id_category = a.id
+                                        where s.validation = 1 && DATE(s.creation) > ? group by s.id order by s.creation desc;");
+                $query->execute(array($search));
+
                 break;
             default:
                 throw new \Picon\Lib\HttpException(500, "Bad function usage");

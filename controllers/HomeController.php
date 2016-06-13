@@ -20,13 +20,17 @@ class HomeController extends \Picon\Lib\Controller{
     public function searchAction(){
         if($this->route["method"] != "GET")
             throw new \Picon\Lib\HttpException(404);
-
+        $type       =   "";
         $keyword    =   isset($_GET["q"])  ? $_GET["q"]  : "";
-        $date       =   isset($_GET["db"]) ? $_GET["db"] : "";
         $color      =   isset($_GET["c"])  ? $_GET["c"]  : "";
+        $date       =   isset($_GET["db"]) ? $_GET["db"] : "";
+        
+        $date       &&  $type   =   "date";
+        $color      &&  $type   =   "color";
+        !$type      &&  $type   =   "text";
 
         $_stickers          =   new \Models\StickerModel();
-        $searchedStikers    =   $_stickers->searchStickers($keyword);
+        $searchedStikers    =   $_stickers->searchStickers($keyword, $type);
 
         $this->set(array("stickers" => $searchedStikers));
     }

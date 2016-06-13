@@ -4,6 +4,8 @@
         <meta charset="UTF-8">
         <title>Bibliastick</title>
         <link rel="icon" type="image/png" href="/assets/img/logo_64.png"/>
+        <script src="/assets/js/jquery.js"></script>
+        <script src="/assets/js/lib.js"></script>
         <link rel="stylesheet" href="/assets/css/font-awesome.css"/>
         <link rel="stylesheet" href="/assets/css/grid.css"/>
         <link rel="stylesheet" href="/assets/css/style.css"/>
@@ -12,9 +14,37 @@
         <div class="container home-content">
             <h1 class="title"><a href="/"><img src="/assets/img/logo_64.png" alt="logo"/> Biblia<span class="title-bold">stick</span></a></h1>
             <form class="home-form" action="/search" method="get">
-                <div class="home-form-search">
+                <div id="search-q" class="home-form-search">
                     <input name="q" placeholder="Type a keyword, a category, etc..."/>
                     <button type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
+                </div>
+                <div id="search-c" class="home-form-search">
+                    <input name="c" placeholder="Type a color (#xxxxxx)"/>
+                    <button type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
+                </div>
+                <div id="search-db" class="home-form-search">
+                    <input name="db" placeholder="Type a date"/>
+                    <button type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
+                </div>
+                <div id="query-selectors">
+                    <div class="col-o-3 col-2">
+                    <input name="type" id="t-q" value="t-q" checked type="radio"> Mot
+                    
+                    </div>
+                    <div class="col-2">
+                    <input name="type" id="t-c" value="t-c" type="radio"> Couleur
+                    
+                    </div>
+                    <div class="col-2">
+                    <input name="type" id="t-db" value="t-db" type="radio"> Date
+                    
+                    </div>
+                </div>
+                <div id="show-query-selectors">
+                    <div class="col-12">
+                    <i class="fa fa-caret-down" aria-hidden="true"></i>
+                    
+                    </div>
                 </div>
             </form>
         <footer class="container home-footer">
