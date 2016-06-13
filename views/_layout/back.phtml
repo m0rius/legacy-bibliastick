@@ -2,14 +2,19 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <title>Bibliastick</title>
+        <title>Bibliastick - Backoffice</title>
         <link rel="icon" type="image/png" href="/assets/img/logo_64.png">
         <link rel="stylesheet" href="/assets/css/font-awesome.css"/>
         <link rel="stylesheet" href="/assets/css/grid.css"/>
         <link rel="stylesheet" href="/assets/css/style.css"/>
     </head>
     <body>
-        <div class="container">
+        <header class="head-caption">
+            <div class="container-fluid">
+                <h1 class="title"><a href="/"><img src="/assets/img/logo_32.png" alt="logo"/> Biblia<span class="title-bold">stick</span></a><span class="title-back"> - Backoffice</span></h1>
+            </div>
+        </header>
+        <div class="container-fluid">
             <div class="row">
                 <div class="col-3">
                     <header>
@@ -18,14 +23,14 @@
                         <nav>
                             <div class="tools">
                                 <h2>Outils</h2>
-                                <h3>Participations</h3>
+                                <h4>Participations</h4>
                                 <ul>
                                     <li><a href="/back/liste/stickers">Stickers</a></li>
                                     <li><a href="/back/liste/contributions">Informations</a></li>
                                     <li><a href="/back/liste/pictures">Photos</a></li>
                                     <li><a href="/back/liste/categories">Categories</a></li>
                                 </ul>
-                                <h3>Autre</h3>
+                                <h4>Autre</h4>
                                 <ul>
                                     <li><a href="/back/liste/stickers/mine">Vos stickers</a></li>
                                     <li><a href="/back/messages">Messagerie</a></li>
@@ -36,14 +41,14 @@
                             if(intval($this->authLevel) >= 2){ ?>
                             <div class="tools tools-admin">
                                 <h2>Administration</h2>
-                                <h3>Validation</h3>
+                                <h4>Validation</h4>
                                 <ul>
                                     <li><a href="/back/admin/liste/stickers">Stickers</a></li>
                                     <li><a href="/back/admin/liste/contributions">Informations</a></li>
                                     <li><a href="/back/admin/liste/pictures">Photos</a></li>
                                     <li><a href="/back/admin/liste/categories">Categories</a></li>
                                 </ul>
-                                <h3>Autre</h3>
+                                <h4>Autre</h4>
                                 <ul>
                                     <li><a href="/back/admin/liste/users">Gestion des utilisateurs</a></li>
                                 </ul>
