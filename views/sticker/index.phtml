@@ -1,22 +1,29 @@
+    <?php if($this->isLoggedIn){ ?>
+    <form action="/sticker/id/<?php echo $this->sticker["id"]; ?>" method="post"/> 
+        <input type="hidden" name="id" value="<?php echo $this->sticker["id"]; ?>" />
+        <?php } ?>
 <h2 class="sticker-title">
     <?php echo $this->sticker["title"]; ?>
     <?php if($this->isLoggedIn){ ?>
-        <small><a href="/edit/sticker/id/<?php echo $this->sticker["id"]; ?>">Editer</a></small>
-    <?php } ?>
+        <button type="submit"><i class="fa fa-star<?php if(!$this->favorite){ echo "-o"; } ?>" aria-hidden="true"></i></button>
+    </form>
+    <small><a href="/edit/sticker/id/<?php echo $this->sticker["id"]; ?>">Editer</a></small>
+
+<?php } ?>
 </h2>
 
 <div class="sticker-categories">
 
-    <?php foreach($this->categories as $cat) { ?>
-        <a href="/search?q=<?php echo $cat["name"]; ?>">#<?php echo $cat["name"]; ?></a>&nbsp;
-    <?php } ?>
+<?php foreach($this->categories as $cat) { ?>
+    <a href="/search?q=<?php echo $cat["name"]; ?>">#<?php echo $cat["name"]; ?></a>&nbsp;
+<?php } ?>
 </div>
 <h3>Prises de vue</h3>
 <div class="row pictures">
-    <?php if($this->pictures) { ?>
-        <div class="col-8 showed-picture-caption">
+<?php if($this->pictures) { ?>
+    <div class="col-8 showed-picture-caption">
             <div class="col-12 showed-picture-content">
-                <a id="showed-link" href="/"><img id="showed-picture" src="http://bibliastick.com/picture/854ef6c1292220dafe7a1d44c7eca0a57e27e838.png" alt=""></a>
+                <a id="showed-link" href="/"><img id="showed-picture" src="" alt=""></a>
             </div>
             <div id="showed-picture-description" class="col-12 showed-picture-description">
                 

@@ -33,7 +33,9 @@ class StickerController extends \Picon\Lib\Controller{
         $_infos         =   new \Models\InfoModel();
         $_pictures      =   new \Models\PictureModel();
         $_categories    =   new \Models\CategoryModel();
-
+        if($this->route["method"] == "POST" && isset($_POST["id"]) && $this->security->isLoggedIn()){
+            $_stickers->setFavorite($_POST["id"], $_SESSION["user"]["id"]);
+        }
         $stickerInfos   =   $_stickers->getOne($id);
         if(!$stickerInfos)
             throw new \Picon\Lib\HttpException(404, "Sticker not found");
@@ -43,6 +45,12 @@ class StickerController extends \Picon\Lib\Controller{
                         "categories"    =>  $_categories->getAllPerSticker($id),
                         "pictures"      =>  $_pictures->getAllPerSticker($id),
                     ));
+        if($this->security->isLoggedIn()){
+            $this->set(array(
+                        "favorite"      =>  $_stickers->isFavorite($id, $_SESSION["user"]["id"])
+                    ));
+        }
+        
     }
 
     public function editAction($id = 0){

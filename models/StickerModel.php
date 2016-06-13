@@ -12,11 +12,17 @@ class StickerModel extends \Picon\Lib\Model{
     public function searchStickers($search, $type = "text"){
         switch ($type) {
             case "text":
-                $query  =   self::$db->prepare("select s.id, s.title, s.validation, s.id_author from stickers as s 
-                                                left join effective_categories as e on s.id = e.id_sticker
-                                                left join available_categories as a on e.id_category = a.id
-                                                where s.validation = 1 && (s.title like ?
-                                                or a.name like ? && a.validation = 1) group by s.id");
+                $query  =   self::$db->prepare("
+                                        select 
+                                            s.id as id, s.title as title, s.validation as validation, 
+                                            s.id_author as author, i.content as infos, p.name as picture
+                                        from stickers as s 
+                                        join infos as i on i.id_sticker = s.id
+                                        left join pictures as p on p.id_sticker = s.id
+                                        left join effective_categories as e on s.id = e.id_sticker
+                                        left join available_categories as a on e.id_category = a.id
+                                        where s.validation = 1 && (s.title like ?
+                                        or a.name like ? && a.validation = 1) group by s.id");
                 $query->execute(array("%" . $search . "%", "%" . $search . "%" ));
                 break;
             case "date":
@@ -98,6 +104,22 @@ class StickerModel extends \Picon\Lib\Model{
     public function updateValidation($id, $lvValidation){
         $query  =   self::$db->prepare("update stickers set validation = ? where id = ?;");
         $query->execute(array($lvValidation, $id));
+    }
+
+    public function isFavorite($id, $idUser){
+        $query  =   self::$db->prepare("select * from liste_stickers where id_user = ? && id_sticker = ?;");
+        $query->execute(array($idUser, $id));
+        return count($query->fetchAll());
+    }
+
+    public function setFavorite($id, $idUser){
+        if($this->isFavorite($id, $idUser)){
+            $query  =   self::$db->prepare("delete from liste_stickers where id_user = ? && id_sticker = ?;");
+            $query->execute(array($idUser, $id));
+        } else {
+            $query  =   self::$db->prepare("insert into liste_stickers (id_user, id_sticker) values (?, ?);");
+            $query->execute(array($idUser, $id));
+        }
     }
 
 }

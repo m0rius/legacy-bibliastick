@@ -1,16 +1,27 @@
 <h1>Résultats de la recherche:</h1>
 <?php if(count($this->stickers)){ ?>
-<ul>
+<ul class="search-results"> 
     <?php foreach($this->stickers as $sticker){?>
         <li>
-            <h3><a href="/sticker/id/<?php echo $sticker["id"]; ?>">
-                    <?php echo $sticker["title"]; ?>
-            </a><h3>
+            <a href="/sticker/id/<?php echo $sticker["id"]; ?>">
+                <div class="row">
+                    <div class="col-3">
+                        <?php if(isset($sticker["picture"]) && $sticker["picture"]) { ?>
+                            <img src="/picture/<?php echo $sticker["picture"]; ?>" alt=""/>
+                        <?php } ?>
+                    </div>
+                    <div class="col-9">
+                        <h3><?php echo $sticker["title"]; ?></h3>
+                        <p><?php echo substr($sticker["infos"], 0, 140) . "..."; ?></p>
+                    </div>
+                </div>
+            </a>
+            <div class="hash"></div>&nbsp; 
         </li>
     <?php } ?>
 </ul>
 <?php } else { ?>
-<h3><small>Aucun résultat</small>
+<h3><small>Aucun résultat</small></h3>
 <?php } ?>
 
 

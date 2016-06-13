@@ -1,45 +1,73 @@
-<h2>Edition du sticker <a href="/sticker/id/<?php echo $this->sticker["id"]; ?>" ><?php echo $this->sticker["title"]; ?></a></h2>
+<h2 class="sticker-title edit-title">Edition du sticker <a href="/sticker/id/<?php echo $this->sticker["id"]; ?>" ><?php echo $this->sticker["title"]; ?></a></h2>
 
-<div id="add-category">
+<div class="sticker-edit-categorie categorie-edit" id="add-category">
     <h3>Ajouter categories [edition]</h3>
     <form  action="/edit/sticker/id/<?php echo $this->sticker["id"]; ?>" method="post">
-        <select name="category">
-            <?php foreach($this->allcategories as $cat) { ?>
-                <option value="<?php echo $cat["id"]; ?>"><?php echo $cat["name"]; ?></option>
-            <?php } ?>
-        </select>
-        <input name="editaction" type="hidden" value="add-category"/>
-        <input type="submit" value="Ajouter" />
+        <p>
+        <span class="corps">
+            <select name="category">
+                <?php foreach($this->allcategories as $cat) { ?>
+                    <option value="<?php echo $cat["id"]; ?>"><?php echo $cat["name"]; ?></option>
+                <?php } ?>
+            </select>
+            <input name="editaction" type="hidden" value="add-category"/>
+            <button type="submit"><i class="fa fa-plus" aria-hidden="true"></i></button>
+        </span>
+        </p>
     </form>
-    <?php if(count($this->awaitCategoriesInfos)){?>
-        <h4>Attention, il existe déjà des affectations en attente de validation:</h4> 
-        <ul>
-            <?php foreach($this->awaitCategoriesInfos as $await) { ?>
-            <li>
-                <strong><?php echo $await["name"]; ?></strong> <small>Ajouté par <a href="mailto:<?php echo $await["mail_author"]; ?>"/><?php echo $await["pseudo_author"]; ?></a> le <?php echo $await["date"]; ?></small>
-            </li>
+    <div class="row">
+        <div class="col-6">
+            <?php if(count($this->awaitCategoriesInfos)){?>
+                <h4>Attention, il y a des affectations en attente de validation:</h4> 
+                <ul>
+                    <?php foreach($this->awaitCategoriesInfos as $await) { ?>
+                    <li>
+                        <strong>#<?php echo $await["name"]; ?></strong> <small>Ajouté par <a href="mailto:<?php echo $await["mail_author"]; ?>"/><?php echo $await["pseudo_author"]; ?></a> le <?php echo $await["date"]; ?></small>
+                    </li>
+                    <?php } ?>
+                </ul>
             <?php } ?>
-        </ul>
-    <?php } ?>
-    <h4>Catgories déjà affectées</h4>
-    <?php foreach($this->categories as $cat) { ?>
-        <a href="/search?q=<?php echo $cat["name"]; ?>"><?php echo $cat["name"]; ?></a>
-    <?php } ?>
+        </div>
+        <div class="col-6">
+            <h4>Catgories déjà affectées</h4>
+            <?php foreach($this->categories as $cat) { ?>
+                <a href="/search?q=<?php echo $cat["name"]; ?>">#<?php echo $cat["name"]; ?></a>
+            <?php } ?>
+        </div>
+    </div>
 </div>
-<div id="add-picture">
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<div id="add-picture" class="row sticker-edit-categorie picture-edit">
     <h3>Photos [edition]</h3>
     <h4>Ajouter</h4>
     <div id="add-photo">
         <form enctype="multipart/form-data" action="/edit/sticker/id/<?php echo $this->sticker["id"]; ?>" method="post">
-            <label for="new_picture_sticker">Choisir un ficher : </label><input name="new_picture_sticker" type="file" accept="image/*"/>
-            <label for="description">Légende</label><textarea name="description" cols="30" rows="10"></textarea>
-            <label for="type">Type</label>
-                <select name="type">
-                    <option value="2" selected>Commune</option>
-                    <option value="3">Imprimable</option>
-                </select>
-            <input name="editaction" type="hidden" value="add-picture"/>
-            <input type="submit" value="Uploader" />
+            <div class="row">
+                <div class="col-6">
+                    <label for="new_picture_sticker">Fichier</label><input name="new_picture_sticker" type="file" accept="image/*"/>
+                    <br/>
+                    <br/>
+                    <label for="type">Type</label>
+                    <select name="type">
+                        <option value="2" selected>commune</option>
+                        <option value="3">imprimable</option>
+                    </select>
+                    <br/>
+                    <br/>
+                    <input class="add" type="submit" value="Uploader" />
+                </div>
+                <div class="col-6">
+                    <label for="description">Légende</label><br/><textarea name="description" cols="30" rows="10" placeholder="Ici, une nouvelle description" ></textarea><br/>
+                    <input name="editaction" type="hidden" value="add-picture"/>
+                </div>
+            </div>
         </form>
     </div>
     <?php if(count($this->awaitPicturesInfos)){?>
@@ -57,40 +85,66 @@
     <h4>Editer les légendes</h4>
     <ul>
         <?php foreach($this->pictures as $picture)  { ?>
-            <li id="edit-legende-<?php echo $picture["legende_id"]; ?>">
-                <img src="/picture/<?php echo $picture["name"] ?>" alt=""/>
-                <form action="/edit/sticker/id/<?php echo $this->sticker["id"]; ?>" method="post">
-                    <label for="legende">Légende</label>
-                    <textarea name="legende" cols="30" rows="10"><?php echo $picture["legende"]; ?></textarea>
-                    <input name="id" type="hidden" value="<?php echo $picture["legende_id"]; ?>" /> 
-                    <input name="editaction" type="hidden" value="edit-legende"/>
-                    <input type="submit" value="Ajouter votre contribution" />
-                </form>
-                <?php if(
-                        isset($this->awaitLegendInfos[$picture["id"]]) && 
-                        count($this->awaitLegendInfos[$picture["id"]])
-                      ){
-                ?>
-                    <h4>Attention, il existe déjà des modifications en attente de validation:</h4> 
-                    <ul>
-                        <?php foreach($this->awaitLegendInfos[$picture["id"]] as $await) { ?>
-                        <li>
-                            <small>Ajouté par <a href="mailto:<?php echo $await["mail_author"]; ?>"/><?php echo $await["pseudo_author"]; ?></a> le <?php echo $await["date"]; ?></small>
-                            <p>
-                                <?php echo $await["content"]; ?>
-                            </p>
-                        </li>
+            <li class="legend row" id="edit-legende-<?php echo $picture["legende_id"]; ?>">
+                    <div class="col col-2">
+                        <img src="/picture/<?php echo $picture["name"] ?>" alt=""/>
+                    </div>
+
+                    <div class="col col-<?php
+                            if(
+                                isset($this->awaitLegendInfos[$picture["id"]]) && 
+                                count($this->awaitLegendInfos[$picture["id"]])
+                              ){ echo 5; } else { echo 10; }
+                            ?>">
+                    
+                        <form action="/edit/sticker/id/<?php echo $this->sticker["id"]; ?>" method="post">
+                            <label for="legende">Légende</label>
+                            <textarea name="legende" cols="30" rows="10"><?php echo $picture["legende"]; ?></textarea>
+                            <input name="id" type="hidden" value="<?php echo $picture["legende_id"]; ?>" /> 
+                            <input name="editaction" type="hidden" value="edit-legende"/>
+                            <br/>
+                            <br/>
+                            <input class="add" type="submit" value="Ajouter votre contribution" />
+                        </form>
+                    </div>
+                        <?php if(
+                                isset($this->awaitLegendInfos[$picture["id"]]) && 
+                                count($this->awaitLegendInfos[$picture["id"]])
+                              ){
+                        ?>
+                    <div class="col col-5">
+                            <h4>Attention, il existe déjà des modifications en attente de validation:</h4> 
+                            <ul>
+                                <?php foreach($this->awaitLegendInfos[$picture["id"]] as $await) { ?>
+                                <li>
+                                    <small>Ajouté par <a href="mailto:<?php echo $await["mail_author"]; ?>"/><?php echo $await["pseudo_author"]; ?></a> le <?php echo $await["date"]; ?></small>
+                                    <p>
+                                        <?php echo $await["content"]; ?>
+                                    </p>
+                                </li>
+                                <?php } ?>
+                            </ul>
+                    </div>
                         <?php } ?>
-                    </ul>
-                <?php } ?>
             </li>
         <?php } ?>
     </ul>
     <?php } ?>
 
 </div>
-<div id="edit-infos">
+
+<div id="edit-infos" class="col-12 info-edit sticker-edit-categorie">
     <h3>Informations [edition]</h3>
+
+<form action="/edit/sticker/id/<?php echo $this->sticker["id"]; ?>" method="post">
+        <textarea name="description" cols="30" rows="10"><?php echo $this->infos["content"]; ?></textarea>
+        <input name="id" type="hidden" value="<?php echo $this->infos["id"]; ?>" /> 
+        <input name="editaction" type="hidden" value="edit-information"/>
+        <br/>
+        <br/>
+        <input class="add" type="submit" value="Ajouter votre contribution" />
+    </form>
+
     <?php if(count($this->awaitContribInfos)){?>
         <h4>Attention, il existe déjà des contributions en attente de validation:</h4> 
         <ul>
@@ -104,11 +158,5 @@
             <?php } ?>
         </ul>
     <?php } ?>
-    <form action="/edit/sticker/id/<?php echo $this->sticker["id"]; ?>" method="post">
-        <textarea name="description" cols="30" rows="10"><?php echo $this->infos["content"]; ?></textarea>
-        <input name="id" type="hidden" value="<?php echo $this->infos["id"]; ?>" /> 
-        <input name="editaction" type="hidden" value="edit-information"/>
-        <input type="submit" value="Ajouter votre contribution" />
-    </form>
 </div>
 
