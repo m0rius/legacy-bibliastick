@@ -28,6 +28,24 @@ class UserController extends \Picon\Lib\Controller{
         }
     }
 
+    public function ownpictAction(){
+        $this->layout = "back";
+        if($this->route["method"] == "POST"){
+            if(
+                    isset($_POST["pass"])   && $_POST["pass"]
+                &&  isset($_POST["cpass"])  && $_POST["cpass"]
+                &&  $_POST["pass"] == $_POST["cpass"]
+                &&  $_POST["pass"]
+            ){
+                $_users =   new \Models\UserModel();
+                $_users->updatePasswordUser($_SESSION["user"]["id"], $_POST["pass"]);
+            }
+            else{
+                $this->sendViewError("Bad inputs");
+            }
+        }
+    }
+
     public function indexAction(){
         $this->layout   =   "back";
    }

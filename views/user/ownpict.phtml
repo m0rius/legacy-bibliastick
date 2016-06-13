@@ -1,0 +1,11 @@
+<h2>Modification du mot de passe du compte <?php echo $this->pseudo;?></h2>
+
+<form class="pass-form" action="/back/ownpict" method="post">
+    <p>
+        <label>Nouveau mot de passe         : </label><input name="pass" type="password"/><br/>
+        <label>Confirmation du mot de passe : </label><input name="cpass" type="password"/><br/>
+        <br/>
+        <br/>
+        <input class="add" type="submit" value="Mettre à jour"/>
+    <p>
+</form>
