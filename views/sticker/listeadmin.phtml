@@ -40,8 +40,8 @@ if(count($this->listeStickers)) {
                 <td><?php echo $sticker["pseudo_author"]; ?></td>
                 <td><?php echo $sticker["mail_author"]; ?></td>
                 <td>
-                    <?php if($level != "validated") { ?><input name="validation" type="radio" value="validate"/> Valider</br><?php } ?>
-                    <?php if($level != "refused") { ?><input name="validation" type="radio" value="refuse"/>Refuser<?php } ?>
+                    <?php if($level != "validated") { ?><input name="validation" type="radio" value="validate"/> [V]</br><?php } ?>
+                    <?php if($level != "refused") { ?><input name="validation" type="radio" value="refuse"/> [R]<?php } ?>
                 <td><input name="delete" type="checkbox" value="delete"/></td>
                 <td>
                     <input name="id" type="hidden" value="<?php echo $sticker["id"]; ?>"/>

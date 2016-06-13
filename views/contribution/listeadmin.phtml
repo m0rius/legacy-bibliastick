@@ -36,8 +36,8 @@
                     <td><a href="mailto:<?php echo $contrib["mail_author"];?>"><?php echo $contrib["mail_author"];?></a></td>
                     <?php if($level != "refused") { ?>
                         <td>
-                            <input name="validation" value="validate" type="radio"/>Valider<br/>
-                            <input name="validation" value="refuse" type="radio" />Refuser
+                            <?php if($level != "validated") { ?><input name="validation" type="radio" value="validate"/> [V]</br><?php } ?>
+                            <?php if($level != "refused") { ?><input name="validation" type="radio" value="refuse"/> [R]<?php } ?>
                         </td>
                     <?php } ?>
                     <td><input name="delete" type="checkbox" value="delete" /></td>

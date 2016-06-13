@@ -42,8 +42,8 @@ if(count($this->listes)) {
                 <td><?php echo $picture["pseudo_author"]; ?></td>
                 <td><?php echo $picture["mail_author"]; ?></td>
                 <td>
-                    <?php if($level != "validated") { ?><input name="validation" type="radio" value="validate"/> Valider</br><?php } ?>
-                    <?php if($level != "refused") { ?><input name="validation" type="radio" value="refuse"/>Refuser<?php } ?>
+                    <?php if($level != "validated") { ?><input name="validation" type="radio" value="validate"/> [V]</br><?php } ?>
+                    <?php if($level != "refused") { ?><input name="validation" type="radio" value="refuse"/> [R]<?php } ?>
                 <td><input name="delete" type="checkbox" value="delete"/></td>
                 <td>
                     <input name="id" type="hidden" value="<?php echo $picture["id"]; ?>"/>
