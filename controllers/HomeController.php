@@ -33,7 +33,20 @@ class HomeController extends \Picon\Lib\Controller{
 
     public function signinAction(){
         if($this->route["method"] == "POST"){
-
+            if(
+                    isset($_POST["pseudo"]) && $_POST["pseudo"]
+                &&  isset($_POST["email"]) && $_POST["email"]
+                &&  isset($_POST["pass"]) && $_POST["pass"]
+                &&  isset($_POST["confirmpass"]) && $_POST["confirmpass"]
+                &&  $_POST["pass"] == $_POST["confirmpass"]
+            ){
+                $_users     =   new \Models\UserModel();
+                $_users->addUser($_POST["pseudo"], $_POST["email"], 1, $_POST["pass"]);
+                $this->sendViewMessage("Merci pour vottre inscription! Un administrateur prendra contact avec vous d'ici quelques jours, stay tuned!");
+            }
+            else{
+                $this->sendViewError("Mauvais remplissage du formulaire");
+            }
         }
     }
 }

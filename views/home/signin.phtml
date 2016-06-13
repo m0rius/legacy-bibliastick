@@ -1,6 +1,30 @@
-<h1>Bibliastick : page d'inscription</h1>
+<h1 class="signin-title">Bibliastick : page d'inscription</h1>
+<?php 
+            if(count($this->_errors)){
+        ?>
+        <div id="liste-errors">
+            <?php foreach($this->_errors as $level => $group) { ?>
+            <ul id="list-errors-l<?php echo $level; ?>">
+                <?php foreach($group as $error) { ?>
+                    <li><?php echo $error; ?></li>
+                <?php } ?>
+            </ul>
+            <?php }?>
+        </div>
+        <?php 
+            }
+            if(count($this->_messages)){
+        ?>
+        <div id="liste-messages">
+            <ul>
+                <?php foreach($this->_messages as $message) { ?>
+                    <li><?php echo $message; ?></li>
+                <?php } ?>
+            </ul>
+        </div>
+        <?php } ?>
 
-<form method="post" action="/signin">
+<form class="signin-form" method="post" action="/signin">
     <p>
         <label for="pseudo">Pseudo</label>
         <input name="pseudo"/>
@@ -14,6 +38,9 @@
         <label for="confirmpass">Confirmation du mot de passe</label>
         <input name="confirmpass" type="password">
         <br/>
-        <input type="submit" value="Valider"/>
+        <br/>
+        <br/>
+        <br/>
+        <input class="add" type="submit" value="Valider"/>
     </p>
 </form>
