@@ -9,41 +9,47 @@
         <link rel="stylesheet" href="/assets/css/style.css"/>
     </head>
     <body>
-         <h1 class="title"><a href="/"><img src="/assets/img/logo_32.png" alt="logo"/> Biblia<span class="title-bold">stick</span></a></h1>
-
-        <h1>Login</h1>
-        <?php 
-            if(count($this->_errors)){
-        ?>
-        <div id="liste-errors">
-            <?php foreach($this->_errors as $level => $group) { ?>
-            <ul id="list-errors-l<?php echo $level; ?>">
-                <?php foreach($group as $error) { ?>
-                    <li><?php echo $error; ?></li>
-                <?php } ?>
-            </ul>
-            <?php }?>
+        <div class="container">
+            
+             <h1 class="title login-title"><a href="/"><img src="/assets/img/logo_32.png" alt="logo"/> Biblia<span class="title-bold">stick</span></a> - <span>Login<span></h1>
+            <?php 
+                if(count($this->_errors)){
+            ?>
+            <div id="liste-errors">
+                <?php foreach($this->_errors as $level => $group) { ?>
+                <ul id="list-errors-l<?php echo $level; ?>">
+                    <?php foreach($group as $error) { ?>
+                        <li><?php echo $error; ?></li>
+                    <?php } ?>
+                </ul>
+                <?php }?>
+            </div>
+            <?php 
+                }
+                if(count($this->_messages)){
+            ?>
+            <div id="liste-messages">
+                <ul>
+                    <?php foreach($this->_messages as $message) { ?>
+                        <li><?php echo $message; ?></li>
+                    <?php } ?>
+                </ul>
+            </div>
+            <?php } ?>
+            <form class="login-form" method="post" action="/back/login">
+                <p>
+                    <label for="pseudo">Pseudo</label>
+                    <input name="pseudo"/>
+                    <br/>
+                    <label for="pass">Mot de passe</label>
+                    <input name="pass" type="password"/>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <input class="add" type="submit" value="connection"/>
+                </p>
+            </form>
         </div>
-        <?php 
-            }
-            if(count($this->_messages)){
-        ?>
-        <div id="liste-messages">
-            <ul>
-                <?php foreach($this->_messages as $message) { ?>
-                    <li><?php echo $message; ?></li>
-                <?php } ?>
-            </ul>
-        </div>
-        <?php } ?>
-        <form method="post" action="/back/login">
-            <label for="pseudo">Pseudo</label>
-            <input name="pseudo"/>
-            <br/>
-            <label for="pass">Mot de passe</label>
-            <input name="pass" type="password"/>
-            <br/>
-            <input type="submit" value="connection"/>
-        </form>
     </body>
 </html>
