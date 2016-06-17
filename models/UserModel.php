@@ -33,7 +33,7 @@ class UserModel extends \Picon\Lib\Model{
 
     public function addUser($pseudo, $mail, $type, $pass, $validation = 3){
         $query  =   self::$db->prepare("insert into users(pseudo, mail, type, pass, validation) values (?, ?, ?, ?, ?)");
-        return $query->execute(array($pseudo, $mail, $type, $pass, $validation));
+        return $query->execute(array($pseudo, $mail, $type, password_hash($pass, PASSWORD_DEFAULT), $validation));
     }
 
     public function updateUser($id, $pseudo, $mail, $type){
