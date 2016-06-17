@@ -1,0 +1,10 @@
+
+; 
+; fill the MySQL parameters as follow:
+;
+[db]
+name = "bibliastick_database"
+user = "bibliastick_username"
+pass = "bibliastick_password"
+host = "localhost"
+
