@@ -3,14 +3,17 @@
 namespace Models;
 
 class UserModel extends \Picon\Lib\Model{
-   
-    /** TODO : crypt those passwords **/
+
+    /* TODO: write the prototype of this method :/ what shall it do??   */
     public function checkInfos($pseudo, $pass){
-        $query  =   self::$db->prepare("select id, type from users where pseudo = ? && pass = ?;");
-        $query->execute(array($pseudo, $pass));
-        $all    =   $query->fetchAll();
-        $infos  =   $all ? $all[0] : array();
-        return $infos;
+        $query  =   self::$db->prepare("select id, type, pass from users where pseudo = ?;");
+        $query->execute(array($pseudo));
+        $all    =   $query->fetch();
+        if (!$all) return array();
+        if (!password_verify($pass,$all['pass'])) {
+            return array();
+        }
+        return $all;
     }
 
     public function getAllValidatedUsers(){
@@ -40,7 +43,7 @@ class UserModel extends \Picon\Lib\Model{
 
     public function updatePasswordUser($id, $pass){
         $query  =   self::$db->prepare("update users set pass = ? where id = ?;");
-        return $query->execute(array($pass, $id));
+        return $query->execute(array(password_hash($pass, PASSWORD_DEFAULT), $id));
     }
 
     public function validateUser($id, $toValidate){
