@@ -1,6 +1,6 @@
 <?php
 
-namespace Controllers;
+namespace App\Controllers;
 
 class StickerController extends \Picon\Lib\Controller{
 

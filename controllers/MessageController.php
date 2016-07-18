@@ -1,6 +1,6 @@
 <?php
 
-namespace Controllers;
+namespace App\Controllers;
 
 class MessageController extends \Picon\Lib\Controller{
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace Controllers;
+namespace App\Controllers;
 
 class ErrorNotfoundController extends \Picon\Lib\Controller{
 

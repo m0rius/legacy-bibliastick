@@ -1,6 +1,6 @@
 <?php
 
-namespace Controllers;
+namespace App\Controllers;
 
 class UserController extends \Picon\Lib\Controller{
 

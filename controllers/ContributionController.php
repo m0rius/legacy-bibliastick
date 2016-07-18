@@ -1,6 +1,6 @@
 <?php
 
-namespace Controllers;
+namespace App\Controllers;
 
 class ContributionController extends \Picon\Lib\Controller{
     
