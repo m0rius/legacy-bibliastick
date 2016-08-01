@@ -1,4 +1,7 @@
 **/*.swp
 /app/configs/db.ini
+/web
 /vendor/
+/.htaccess
 /composer.json
+/composer.lock
