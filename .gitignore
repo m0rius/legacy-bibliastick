@@ -1,2 +1,4 @@
 **/*.swp
-app/configs/db.ini
+/app/configs/db.ini
+/vendor/
+/composer.json
