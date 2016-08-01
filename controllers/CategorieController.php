@@ -17,7 +17,7 @@ class CategorieController extends \Picon\Lib\Controller{
     // Auth level : 1
     public function listeAction(){
         $idUser         =   $_SESSION["user"]["id"];
-        $_categories    =   new \Models\CategoryModel();
+        $_categories    =   new \App\Models\CategoryModel();
         if($this->route["method"] == "POST"){
             if(isset($_POST["title"]) && $_POST["title"]){
                 $_categories->createNew($_POST["title"], (isset($_POST["parent"]) ? $_POST["parent"] : 0), $idUser);
@@ -34,7 +34,7 @@ class CategorieController extends \Picon\Lib\Controller{
     // Auth level : 2
     public function listeAdminAction(){
         $idUser         =   $_SESSION["user"]["id"];
-        $_categories    =   new \Models\CategoryModel();
+        $_categories    =   new \App\Models\CategoryModel();
         if($this->route["method"] == "POST"){
             if(isset($_POST["id"]) && isset($_POST["type"])){
                 if(isset($_POST["delete"]) && $_POST["delete"]){

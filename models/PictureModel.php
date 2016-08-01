@@ -20,8 +20,8 @@ class PictureModel extends \Picon\Lib\Model{
     }
 
     public function createNew($name, $legend, $type, $color, $idAuthor, $idSticker){
-        $_infos         =   new \Models\InfoModel();
-        $_contributions =   new \Models\ContributionModel();
+        $_infos         =   new \App\Models\InfoModel();
+        $_contributions =   new \App\Models\ContributionModel();
         $query  =   self::$db->prepare("insert into pictures (name, type, color, validation, creation, id_author, id_sticker) values (?, ?, ?, 3, NOW(), ?, ?);");
         $query->execute(array($name, $type, $color, $idAuthor, $idSticker));
 

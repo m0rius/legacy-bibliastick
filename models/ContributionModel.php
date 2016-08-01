@@ -76,7 +76,7 @@ class ContributionModel extends \Picon\Lib\Model{
 
         // When we validate a contrib previously waiting for valdation, we update info content
         if($lvValidation == 1 && isset($currentInfos["validation"]) && $currentInfos["validation"] == 3){
-            $_infos =   new \Models\InfoModel();
+            $_infos =   new \App\Models\InfoModel();
 
             $query  =   self::$db->prepare("select content, validation, id_info from contributions where id = ?;");
             $query->execute(array($id));
@@ -87,7 +87,7 @@ class ContributionModel extends \Picon\Lib\Model{
         /*  If we refuse a contrib previously validated, we rollback info content 
             with the previous contib content */
         if($lvValidation == 2 && isset($currentInfos["validation"]) && $currentInfos["validation"] == 1 ){
-            $_infos =   new \Models\InfoModel();
+            $_infos =   new \App\Models\InfoModel();
             $query  =   self::$db->prepare("select content from contributions where id_info = ? && validation = 1 order by id desc limit 1;");
             $query->execute(array($currentInfos["id_info"]));
 

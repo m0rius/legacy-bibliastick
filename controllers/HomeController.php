@@ -29,7 +29,7 @@ class HomeController extends \Picon\Lib\Controller{
         $color      &&  $type   =   "color";
         !$type      &&  $type   =   "text";
 
-        $_stickers          =   new \Models\StickerModel();
+        $_stickers          =   new \App\Models\StickerModel();
         $searchedStikers    =   $_stickers->searchStickers($keyword, $type);
 
         $this->set(array("stickers" => $searchedStikers));
@@ -44,7 +44,7 @@ class HomeController extends \Picon\Lib\Controller{
                 &&  isset($_POST["confirmpass"]) && $_POST["confirmpass"]
                 &&  $_POST["pass"] == $_POST["confirmpass"]
             ){
-                $_users     =   new \Models\UserModel();
+                $_users     =   new \App\Models\UserModel();
                 $_users->addUser($_POST["pseudo"], $_POST["email"], 1, $_POST["pass"]);
                 $this->sendViewMessage("Merci pour vottre inscription! Un administrateur prendra contact avec vous d'ici quelques jours, stay tuned!");
             }

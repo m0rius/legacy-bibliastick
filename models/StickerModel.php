@@ -26,7 +26,7 @@ class StickerModel extends \Picon\Lib\Model{
                 $query->execute(array("%" . $search . "%", "%" . $search . "%" ));
                 break;
             case "color":
-                $_pictures  =   new \Models\PictureModel();
+                $_pictures  =   new \App\Models\PictureModel();
                 $query      =   self::$db->query("
                                         select 
                                             s.id as id, s.title as title, s.validation as validation, 
@@ -120,8 +120,8 @@ class StickerModel extends \Picon\Lib\Model{
 
 
     public function createNew($title, $description, $idAuthor){
-        $_infos         =   new \Models\InfoModel();
-        $_contribution  =   new \Models\ContributionModel();
+        $_infos         =   new \App\Models\InfoModel();
+        $_contribution  =   new \App\Models\ContributionModel();
 
         $query  =   self::$db->prepare("insert into stickers (title, creation, id_author) values (?, NOW(), ?)");
         $query->execute(array($title, $idAuthor));
@@ -135,7 +135,7 @@ class StickerModel extends \Picon\Lib\Model{
 
 
     public function delete($id){
-        $_pictures   =   new \Models\PictureModel();
+        $_pictures   =   new \App\Models\PictureModel();
         $_pictures->deleteAllForSticker($id);
 
         $query  =   self::$db->prepare("delete from stickers where id = ?;");

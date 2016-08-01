@@ -29,10 +29,10 @@ class StickerController extends \Picon\Lib\Controller{
     }
 
     public function indexAction($id = 0){
-        $_stickers      =   new \Models\StickerModel();
-        $_infos         =   new \Models\InfoModel();
-        $_pictures      =   new \Models\PictureModel();
-        $_categories    =   new \Models\CategoryModel();
+        $_stickers      =   new \App\Models\StickerModel();
+        $_infos         =   new \App\Models\InfoModel();
+        $_pictures      =   new \App\Models\PictureModel();
+        $_categories    =   new \App\Models\CategoryModel();
         if($this->route["method"] == "POST" && isset($_POST["id"]) && $this->security->isLoggedIn()){
             $_stickers->setFavorite($_POST["id"], $_SESSION["user"]["id"]);
         }
@@ -54,7 +54,7 @@ class StickerController extends \Picon\Lib\Controller{
     }
 
     public function editAction($id = 0){
-        $_stickers      =   new \Models\StickerModel();
+        $_stickers      =   new \App\Models\StickerModel();
         $stickerInfos   =   $_stickers->getOne($id);
         if(!$stickerInfos)
             throw new \Picon\Lib\HttpException(404, "Sticker not found");
@@ -85,10 +85,10 @@ class StickerController extends \Picon\Lib\Controller{
             }
         }
 
-        $_infos         =   new \Models\InfoModel();
-        $_pictures      =   new \Models\PictureModel();
-        $_categories    =   new \Models\CategoryModel();
-        $_contributions =   new \Models\ContributionModel();
+        $_infos         =   new \App\Models\InfoModel();
+        $_pictures      =   new \App\Models\PictureModel();
+        $_categories    =   new \App\Models\CategoryModel();
+        $_contributions =   new \App\Models\ContributionModel();
 
         $this->set(array(
                         "sticker"               =>  $stickerInfos,
@@ -105,7 +105,7 @@ class StickerController extends \Picon\Lib\Controller{
 
     private function AddCategoryHandler($id){
         if(isset($_POST["category"]) && $_POST["category"]){
-            $_contributions  =   new \Models\CategoryModel();
+            $_contributions  =   new \App\Models\CategoryModel();
             $_contributions->createNewAffectation($_POST["category"], $id, $_SESSION["user"]["id"]);
         }  else {    
             $this->sendViewError("Bad inputs");
@@ -114,7 +114,7 @@ class StickerController extends \Picon\Lib\Controller{
 
     private function EditPictureLegendHandler(){
         if(isset($_POST["legende"]) && $_POST["legende"] && isset($_POST["id"]) && $_POST["id"]){
-            $_contributions  =   new \Models\ContributionModel();
+            $_contributions  =   new \App\Models\ContributionModel();
             $_contributions->createNew($_POST["legende"], $_POST["id"], $_SESSION["user"]["id"]);
         }  else {    
             $this->sendViewError("Bad inputs");
@@ -123,7 +123,7 @@ class StickerController extends \Picon\Lib\Controller{
 
     private function EditStickerInformationHandler(){
         if(isset($_POST["description"]) && $_POST["description"] && isset($_POST["id"]) && $_POST["id"]){
-            $_contributions  =   new \Models\ContributionModel();
+            $_contributions  =   new \App\Models\ContributionModel();
             $_contributions->createNew($_POST["description"], $_POST["id"], $_SESSION["user"]["id"]);
         }  else {    
             $this->sendViewError("Bad inputs");
@@ -131,7 +131,7 @@ class StickerController extends \Picon\Lib\Controller{
     }
 
     private function AddPictureHandler($id){
-        $_pictures      =   new \Models\PictureModel();      
+        $_pictures      =   new \App\Models\PictureModel();      
         $storagePath    =       \Picon\Lib\Config::get_value("ROOT")
                             .   \Picon\Lib\Config::get_value("sticker_folder", "path");
 
@@ -165,7 +165,7 @@ class StickerController extends \Picon\Lib\Controller{
 
     public function listeAction($type = ""){
         $idUser     =   $_SESSION["user"]["id"];
-        $_stickers  =   new \Models\StickerModel();
+        $_stickers  =   new \App\Models\StickerModel();
 
         if($this->route["method"]   ==  "POST"){
             if(isset($_POST["title"]) && $_POST["title"] && isset($_POST["description"]) && $_POST["description"]){
@@ -184,7 +184,7 @@ class StickerController extends \Picon\Lib\Controller{
     }
 
     public function listeAdminAction(){
-        $_stickers  =   new \Models\StickerModel();
+        $_stickers  =   new \App\Models\StickerModel();
         if($this->route["method"]   ==  "POST"){
             if(isset($_POST["id"])){
                 if(isset($_POST["delete"]) && $_POST["delete"]){
