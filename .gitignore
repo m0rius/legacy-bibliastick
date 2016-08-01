@@ -1,2 +1,2 @@
 **/*.swp
-configs/db.ini
+app/configs/db.ini
