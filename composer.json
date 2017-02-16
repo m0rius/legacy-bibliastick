@@ -1,0 +1,20 @@
+{
+    "name": "zadochob/bibliastick",
+    "type": "project",
+    "license": "GPL",
+    "require": {
+        "zadochob/picon": "@dev"
+    },
+    "repositories": {
+        "zadochob/picon": {
+            "type": "vcs",
+            "url": "https://github.com/zadochob/picon"
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\Controllers\\": "app/controllers/",
+            "App\\Models\\": "app/models/"
+        }
+    }
+}

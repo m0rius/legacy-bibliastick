@@ -1,0 +1,45 @@
+[
+    {
+        "name": "zadochob/picon",
+        "version": "dev-dev-composer-and-tests",
+        "version_normalized": "dev-dev-composer-and-tests",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/zadochob/picon.git",
+            "reference": "0b1562db217051a13a13e2bbd8c056f13af4f5a4"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/zadochob/picon/zipball/0b1562db217051a13a13e2bbd8c056f13af4f5a4",
+            "reference": "0b1562db217051a13a13e2bbd8c056f13af4f5a4",
+            "shasum": ""
+        },
+        "require-dev": {
+            "phpunit/phpunit": "5.4.*"
+        },
+        "time": "2016-08-01 12:09:51",
+        "type": "library",
+        "installation-source": "source",
+        "autoload": {
+            "psr-4": {
+                "Picon\\Lib\\": "lib/",
+                "App\\Controllers\\": "app/controllers/",
+                "App\\Models\\": "app/models/"
+            }
+        },
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "zadochob",
+                "email": "zadochob@gmail.com"
+            }
+        ],
+        "description": "The lost PHP framework",
+        "support": {
+            "source": "https://github.com/zadochob/picon/tree/dev-composer-and-tests",
+            "issues": "https://github.com/zadochob/picon/issues"
+        }
+    }
+]

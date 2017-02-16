@@ -1,0 +1,62 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "This file is @generated automatically"
+    ],
+    "hash": "ef7e8f2473193a2613c1ebe193d7715e",
+    "content-hash": "0d7c9332c4cca628176c56095188f363",
+    "packages": [
+        {
+            "name": "zadochob/picon",
+            "version": "dev-dev-composer-and-tests",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/zadochob/picon.git",
+                "reference": "0b1562db217051a13a13e2bbd8c056f13af4f5a4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/zadochob/picon/zipball/0b1562db217051a13a13e2bbd8c056f13af4f5a4",
+                "reference": "0b1562db217051a13a13e2bbd8c056f13af4f5a4",
+                "shasum": ""
+            },
+            "require-dev": {
+                "phpunit/phpunit": "5.4.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Picon\\Lib\\": "lib/",
+                    "App\\Controllers\\": "app/controllers/",
+                    "App\\Models\\": "app/models/"
+                }
+            },
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "zadochob",
+                    "email": "zadochob@gmail.com"
+                }
+            ],
+            "description": "The lost PHP framework",
+            "support": {
+                "source": "https://github.com/zadochob/picon/tree/dev-composer-and-tests",
+                "issues": "https://github.com/zadochob/picon/issues"
+            },
+            "time": "2016-08-01 12:09:51"
+        }
+    ],
+    "packages-dev": [],
+    "aliases": [],
+    "minimum-stability": "stable",
+    "stability-flags": {
+        "zadochob/picon": 20
+    },
+    "prefer-stable": false,
+    "prefer-lowest": false,
+    "platform": [],
+    "platform-dev": []
+}
